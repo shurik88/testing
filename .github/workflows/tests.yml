@@ -48,7 +48,7 @@ jobs:
           environment: testing.postman_environment.json
           bail: true
           workingDir: ${{ github.workspace }}/test
-          reporter : "{ \"junit\" : { \"export"\ : \"${{ github.workspace }}/testresults/xmlResults.xml\" } }"
+          reporters : cli,html
       - name: Publish newman results
         uses: actions/upload-artifact@v2
         with:
