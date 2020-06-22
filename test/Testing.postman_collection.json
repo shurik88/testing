@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "05610ff5-c28c-4390-a92e-d939458e3f89",
+		"name": "Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test",
+			"item": [
+				{
+					"name": "Get forecast",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bba0a440-4126-483d-8671-13bb0fbd8b99",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"    \"type\": \"array\",\r",
+									"    \"items\":[{\r",
+									"        \"type\":\"object\",\r",
+									"        \"properties\":{\r",
+									"            \"date\":{\r",
+									"                \"type\":\"string\"\r",
+									"            },\r",
+									"            \"temperatureF\":{\r",
+									"                \"type\":\"number\"\r",
+									"            },\r",
+									"            \"temperatureC\":{\r",
+									"                \"type\":\"number\"\r",
+									"            },\r",
+									"            \"summary\":{\r",
+									"                \"type\":\"string\"\r",
+									"            },\r",
+									"        },\r",
+									"        \"required\": [\r",
+									"            \"summary\",\r",
+									"            \"temperatureC\",\r",
+									"            \"temperatureF\",\r",
+									"            \"date\"\r",
+									"        ]\r",
+									"    }]\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Validate schema\", () => {\r",
+									"     pm.response.to.have.jsonSchema(schema);\r",
+									"     \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Forecast length 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eq(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/weatherforecast",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"weatherforecast"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
