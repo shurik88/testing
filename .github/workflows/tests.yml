@@ -44,7 +44,8 @@ jobs:
       - name: Run newman tests
         uses: matt-ball/newman-action@master
         with:
-          working-directory: ${{ github.workspace }}/test
           collection: Testing.postman_collection.json
           environment: testing.postman_environment.json
+          bail: true
+          workingDir: ${{ github.workspace }}/test
     
