@@ -44,14 +44,15 @@ jobs:
       - name: Run newman tests
         uses: matt-ball/newman-action@master
         with:
-          collection: Testing.postman_collection.json
-          environment: testing.postman_environment.json
+          collection: ${{ github.workspace }}/test/Testing.postman_collection.json
+          environment: ${{ github.workspace }}/test/testing.postman_environment.json
           bail: true
           workingDir: ${{ github.workspace }}/test
-          reporters : cli,html
+          reporters : "cli,junit"
+          reporter: "{\"junit\":{\"export\":\"${{ github.workspace }}.\/xmlResults.xml\"}}"
       - name: Publish newman results
         uses: actions/upload-artifact@v2
         with:
           name: newman
-          path: ${{ github.workspace }}/testresults/xmlResults.xml
+          path: ${{ github.workspace }}/xmlResults.xml
     
