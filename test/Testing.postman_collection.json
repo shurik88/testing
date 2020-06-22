@@ -52,7 +52,7 @@
 									"     \r",
 									"});\r",
 									"\r",
-									"pm.test(\"Forecast length 5\", function () {\r",
+									"pm.test(\"Forecast length 4\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.length).to.eq(5);\r",
 									"});"
