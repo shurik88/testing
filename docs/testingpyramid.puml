@@ -1,0 +1,40 @@
+@startuml "Диаграмма последовательности"
+ 
+hide footbox
+title Диаграмма последовательности
+
+actor "Пользователь" as user
+boundary "Браузер" as browser
+box Модульное тестирование фронтэнда
+control "FronEnd App" as front
+end box
+control "Web Api" as api
+box Модульное тестирование
+control "Сервис работы с сущностью" as service
+end box
+entity "Хранилище" as db
+
+group Сквозное тестирование
+user -> browser: ввести данные
+activate browser
+browser -> front: изменить состояние модели
+activate front
+group Компонентное тестирование
+front -> api: отправить http-запрос
+activate api
+
+api -> service: изменить даные на сервере
+group Интеграционное тестирование
+activate service
+
+service -> db: сохранить данные
+activate db
+return статус
+return статус
+end
+return http-ответ
+end
+return Изменение разметки
+return Изменение в интерфейсе
+end
+@enduml

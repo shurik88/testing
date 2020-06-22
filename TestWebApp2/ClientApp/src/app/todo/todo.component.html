@@ -1,0 +1,56 @@
+<h1 id="tableLabel">To-Do list</h1>
+
+<p>This component demonstrates fetching data from the server and pushing data to server.</p>
+<h1>ToDo list</h1>
+<input type="button" value="Добавить" class="btn btn-primary mb-3" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+  <thead>
+    <tr>
+      <td>Текст</td>
+      <td>Приоритет</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of todos">
+      <ng-template [ngIf]="todo?.id != p.id" [ngIfElse]="edit">
+        <td>{{p?.text}}</td>
+        <td>{{p?.priority}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary ml-3" (click)="editToDo(p)">Изменить</button>
+          <button class="btn btn-sm btn-danger ml-3" (click)="delete(p)">Удалить</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #edit>
+  <td>
+    <input type="text" [(ngModel)]="todo.text" class="form-control" />
+  </td>
+  <td>
+    <input type="number" step="1" max="10" min="1" [(ngModel)]="todo.priority" class="form-control" />
+  </td>
+  <td>
+    <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success ml-3" />
+    <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning ml-3" />
+  </td>
+</ng-template>
+
+<!--шаблон для добавления-->
+<ng-template #create>
+  <div class="form-group">
+    <label>Текст</label>
+    <input type="text" [(ngModel)]="todo.text" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Приоритет</label>
+    <input type="number" step="1" max="10" min="1" [(ngModel)]="todo.priority" class="form-control" />
+  </div>
+  <div>
+    <input type="button" value="Сохранить" (click)="save()" class="btn btn-success ml-3" />
+    <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning ml-3" />
+  </div>
+</ng-template>
