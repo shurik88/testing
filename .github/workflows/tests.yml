@@ -41,8 +41,6 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
         working-directory: ${{ github.workspace }}/TestWebApp2
-      - name: Test docker
-        run: docker run --network container:testwebapp2 appropriate/curl -s --retry 10 --retry-connrefused http://localhost:5000/
       - name: Run newman tests
         uses: matt-ball/newman-action@master
         with:
