@@ -49,7 +49,7 @@ jobs:
           bail: true
           workingDir: ${{ github.workspace }}/test
           reporters : "cli,junit"
-          reporter: "{\"junit\":{\"export\":\"${{ github.workspace }}.\/xmlResults.xml\"}}"
+          reporter: '{\"junit\":{\"export\":\"${{ github.workspace }}\/xmlResults.xml\"}}'
       - name: Publish newman results
         uses: actions/upload-artifact@v2
         with:
