@@ -70,10 +70,11 @@ namespace TestWebApp2.Controllers
                 return BadRequest(ModelState);
 
             var replacedItem = _todos.FindOneAndReplace(x => x.Id == Guid.Parse(id), new ToDo { Id = Guid.Parse(id), Priority = item.Priority, Text = item.Text });
-            if (replacedItem == null)
-                return NotFound(id);
+            if (replacedItem != null)
+                return Ok(item);
 
-            return Ok(item);
+            _todos.InsertOne(new ToDo { Id = Guid.Parse(id), Priority = item.Priority, Text = item.Text });
+            return StatusCode(201, item);
         }
     }
 }

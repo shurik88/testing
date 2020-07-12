@@ -3,22 +3,31 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <p *ngIf="!forecasts"><em>Loading...</em></p>
+<div class="row" *ngIf="forecasts">
+  <div class="row form-inline">
+    <input type="number" step="1" max="10" min="1" [(ngModel)]="count" class="form-control ml-3" />
+    <input type="button" value="Обновить" (click)="refresh()" class="btn btn-sm btn-success ml-3" />
+  </div>
+  <div class="row">
+    <table class='table table-striped' aria-labelledby="tableLabel">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Temp. (C)</th>
+          <th>Temp. (F)</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let forecast of forecasts">
+          <td>{{ forecast.date }}</td>
+          <td>{{ forecast.temperatureC }}</td>
+          <td>{{ forecast.temperatureF }}</td>
+          <td>{{ forecast.summary }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
-    </tr>
-  </tbody>
-</table>
