@@ -1,4 +1,5 @@
 GET http://egikova:5000/api/weatherforecast?count=5 HTTP/1.1
+/* Лишнее
 Host: egikova:5000
 Connection: keep-alive
 Accept: application/json, text/plain, */*
@@ -6,18 +7,19 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 Referer: http://egikova:5000/fetch-data
 Accept-Encoding: gzip, deflate
 Accept-Language: en-US,en;q=0.9
+/*
 
 *******Комментарий от меня:
 
-Схема или протокол запроса: http
+Схема или протокол запроса: http +
 
-Путь запроса(query path): /api/weatherforecast
+Путь запроса(query path): /api/weatherforecast  +
 
-Строка запроса(query string), если есть: count=5 HTTP/1.1
+Строка запроса(query string), если есть: count=5 HTTP/1.1 - только название параметра и его тип
 
-Метод - GET
+Метод - GET +
 
-Статус код ответа: 200 (я не уверена). Сам ответ вот:
+Статус код ответа: 200 (я не уверена). Сам ответ вот: +
 
 HTTP/1.1 200 OK
 Date: Mon, 20 Jul 2020 09:41:46 GMT
@@ -25,7 +27,7 @@ Content-Type: application/json; charset=utf-8
 Server: Kestrel
 Transfer-Encoding: chunked
 
-JSON отдельным файлом
+JSON отдельным файлом  - Json должен быть здесь
 
 
 :-*
