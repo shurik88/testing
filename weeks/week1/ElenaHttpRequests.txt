@@ -1,0 +1,15 @@
+1. GET http://egikova:5000/api/weatherforecast?count=5 HTTP/1.1
+Схема или протокол запроса: http +
+Путь запроса(query path): /api/weatherforecast  +
+Строка запроса(query string), если есть: count=5 HTTP/1.1 - только название параметра и его тип
+Метод - GET +
+Статус код ответа: 200 (я не уверена). Сам ответ вот: +
+Ответ
+[
+  {
+    date:string,
+    temperatureC: number,
+    temperatureF: number,
+    summary: string
+  }
+]
