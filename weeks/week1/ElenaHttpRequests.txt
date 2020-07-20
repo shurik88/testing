@@ -13,3 +13,23 @@
     summary: string
   }
 ]
+
+
+2. todos 
+
+Метод запроса  Get
+Схема или протокол запроса http
+Путь запроса(query path) /api/todos HTTP/1.1
+Строка запроса(query string) нету
+Статус код ответа нету
+Тело запроса (подробное описание json) нету 
+
+
+Тело ответа (подробное описание json):
+[
+  {
+    "id":string,
+    "text": string,
+    "priority": number
+  }
+]
