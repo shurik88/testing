@@ -1,5 +1,19 @@
 
 
+
+
+Request2
+
+GET 
+HTTP/1.1
+/api/todos 
+
+200 OK
+Object { id: "cb5e90ff-81a9-458f-9d9e-40054de178cc", text: "sdfdsf", priority: 1 }
+
+
+Request1
+
 GET 
 HTTP/1.1
 /api/weatherforecast 
