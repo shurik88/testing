@@ -1,0 +1,34 @@
+
+
+GET 
+HTTP/1.1
+/api/weatherforecast 
+
+200 OK
+	
+0	Object { date: "2020-08-17T18:13:35.6871617+00:00", temperatureC: 12, temperatureF: 53, … }
+date	"2020-08-17T18:13:35.6871617+00:00"
+temperatureC	12
+temperatureF	53
+summary	"Mild"
+1	Object { date: "2020-08-18T18:13:35.6871635+00:00", temperatureC: 28, temperatureF: 82, … }
+date	"2020-08-18T18:13:35.6871635+00:00"
+temperatureC	28
+temperatureF	82
+summary	"Mild"
+2	Object { date: "2020-08-19T18:13:35.6871637+00:00", temperatureC: 37, temperatureF: 98, … }
+date	"2020-08-19T18:13:35.6871637+00:00"
+temperatureC	37
+temperatureF	98
+summary	"Warm"
+3	Object { date: "2020-08-20T18:13:35.6871638+00:00", temperatureC: 47, temperatureF: 116, … }
+date	"2020-08-20T18:13:35.6871638+00:00"
+temperatureC	47
+temperatureF	116
+summary	"Bracing"
+4	Object { date: "2020-08-21T18:13:35.6871639+00:00", temperatureC: -20, temperatureF: -3, … }
+date	"2020-08-21T18:13:35.6871639+00:00"
+temperatureC	-20
+temperatureF	-3
+summary	"Cool"
+
