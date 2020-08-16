@@ -2,6 +2,20 @@
 
 
 
+Request3
+
+
+POST 
+HTTP/1.1
+/api/todos 
+
+200 OK
+
+{"id":null,"text":"new do3","priority":3}
+
+{"id":"f40b66bc-d3ab-452b-b2d2-a57abbccae66","text":"new do3","priority":3}
+
+
 Request2
 
 GET 
