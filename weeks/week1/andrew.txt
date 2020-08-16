@@ -2,8 +2,18 @@
 
 
 
-Request3
 
+Request4
+
+DELETE 
+HTTP/1.1
+/api/todos/cb5e90ff-81a9-458f-9d9e-40054de178cc 
+
+204 No Content
+
+
+
+Request3
 
 POST 
 HTTP/1.1
@@ -16,6 +26,7 @@ HTTP/1.1
 {"id":"f40b66bc-d3ab-452b-b2d2-a57abbccae66","text":"new do3","priority":3}
 
 
+
 Request2
 
 GET 
@@ -24,6 +35,7 @@ HTTP/1.1
 
 200 OK
 Object { id: "cb5e90ff-81a9-458f-9d9e-40054de178cc", text: "sdfdsf", priority: 1 }
+
 
 
 Request1
