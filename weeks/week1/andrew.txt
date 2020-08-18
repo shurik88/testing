@@ -59,8 +59,18 @@ Response2
 
 200 OK
 
-Object {"id":string,"text":string,"priority":number} - разве объект возвращается? 
-
+[
+    Object {
+    "id":string,
+    "text":string,
+    "priority":number
+    },
+Object {
+    "id":string,
+    "text":string,
+    "priority":number
+    }
+]
 
 
 
@@ -78,32 +88,19 @@ Response1
 200 OK
 	
 [
-"id":number - что за id: number такого не может быть в массиве, массив в js это набор однотипных элементов
-Object 
+Object
     { 
-    "val1":string
-    "val2":number
-    "val3":number
+    "val1":string,
+    "val2":number,
+    "val3":number,
     "val4":string
 },
-"id":number 
 Object 
     { 
-    "val1":string
-    "val2":number
-    "val3":number
+    "val1":string,
+    "val2":number,
+    "val3":number,
     "val4":string
     }
 ]
 
-
-for example: - лишнее
-[
-    0 Object 
-    { 
-    date	"2020-08-17T18:13:35.6871617+00:00"
-    temperatureC	12
-    temperatureF	53
-    summary	"Mild"
-    }
-]
