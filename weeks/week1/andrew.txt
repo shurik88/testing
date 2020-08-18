@@ -53,13 +53,13 @@ Request2
 
 GET 
 HTTP/1.1
-/api/todos 
+/api/todos
 
 Response2
 
 200 OK
 
-Object {"id":string,"text":string,"priority":number}
+Object {"id":string,"text":string,"priority":number} - разве объект возвращается? 
 
 
 
@@ -78,7 +78,7 @@ Response1
 200 OK
 	
 [
-"id":number 
+"id":number - что за id: number такого не может быть в массиве, массив в js это набор однотипных элементов
 Object 
     { 
     "val1":string
@@ -97,7 +97,7 @@ Object
 ]
 
 
-for example:
+for example: - лишнее
 [
     0 Object 
     { 
