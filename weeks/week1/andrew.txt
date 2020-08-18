@@ -1,19 +1,21 @@
 
 
 
-
-
 Request5
 
 PUT 
 HTTP/1.1
-/api/todos/f40b66bc-d3ab-452b-b2d2-a57abbccae66 
+/api/todos/{{id}}
+
+"id":string
+
+{"id":string,"text":string,"priority":number}
+
+Response5
 
 200 OK
 
-{"id":"f40b66bc-d3ab-452b-b2d2-a57abbccae66","text":"new do to5","priority":2}
-
-{"id":"f40b66bc-d3ab-452b-b2d2-a57abbccae66","text":"new do to5","priority":2}
+{"id":string,"text":string,"priority":number}
 
 
 
@@ -21,7 +23,11 @@ Request4
 
 DELETE 
 HTTP/1.1
-/api/todos/cb5e90ff-81a9-458f-9d9e-40054de178cc 
+/api/todos/{{id}}
+
+"id":string
+
+Response4
 
 204 No Content
 
@@ -33,11 +39,13 @@ POST
 HTTP/1.1
 /api/todos 
 
+{"id":null,"text":string,"priority":number}
+
+Response3 
+
 200 OK
 
-{"id":null,"text":"new do3","priority":3}
-
-{"id":"f40b66bc-d3ab-452b-b2d2-a57abbccae66","text":"new do3","priority":3}
+{"id":string,"text":string,"priority":number}
 
 
 
@@ -47,8 +55,12 @@ GET
 HTTP/1.1
 /api/todos 
 
+Response2
+
 200 OK
-Object { id: "cb5e90ff-81a9-458f-9d9e-40054de178cc", text: "sdfdsf", priority: 1 }
+
+Object {"id":string,"text":string,"priority":number}
+
 
 
 
@@ -56,33 +68,42 @@ Request1
 
 GET 
 HTTP/1.1
-/api/weatherforecast 
+/api/weatherforecast
+?count={{id}}
+
+"id": number
+
+Response1
 
 200 OK
 	
-0	Object { date: "2020-08-17T18:13:35.6871617+00:00", temperatureC: 12, temperatureF: 53, … }
-date	"2020-08-17T18:13:35.6871617+00:00"
-temperatureC	12
-temperatureF	53
-summary	"Mild"
-1	Object { date: "2020-08-18T18:13:35.6871635+00:00", temperatureC: 28, temperatureF: 82, … }
-date	"2020-08-18T18:13:35.6871635+00:00"
-temperatureC	28
-temperatureF	82
-summary	"Mild"
-2	Object { date: "2020-08-19T18:13:35.6871637+00:00", temperatureC: 37, temperatureF: 98, … }
-date	"2020-08-19T18:13:35.6871637+00:00"
-temperatureC	37
-temperatureF	98
-summary	"Warm"
-3	Object { date: "2020-08-20T18:13:35.6871638+00:00", temperatureC: 47, temperatureF: 116, … }
-date	"2020-08-20T18:13:35.6871638+00:00"
-temperatureC	47
-temperatureF	116
-summary	"Bracing"
-4	Object { date: "2020-08-21T18:13:35.6871639+00:00", temperatureC: -20, temperatureF: -3, … }
-date	"2020-08-21T18:13:35.6871639+00:00"
-temperatureC	-20
-temperatureF	-3
-summary	"Cool"
+[
+"id":number 
+Object 
+    { 
+    "val1":string
+    "val2":number
+    "val3":number
+    "val4":string
+},
+"id":number 
+Object 
+    { 
+    "val1":string
+    "val2":number
+    "val3":number
+    "val4":string
+    }
+]
 
+
+for example:
+[
+    0 Object 
+    { 
+    date	"2020-08-17T18:13:35.6871617+00:00"
+    temperatureC	12
+    temperatureF	53
+    summary	"Mild"
+    }
+]
