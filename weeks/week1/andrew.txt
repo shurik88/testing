@@ -64,11 +64,6 @@ Response2
     "id":string,
     "text":string,
     "priority":number
-    },
-Object {
-    "id":string,
-    "text":string,
-    "priority":number
     }
 ]
 
@@ -94,13 +89,6 @@ Object
     "val2":number,
     "val3":number,
     "val4":string
-},
-Object 
-    { 
-    "val1":string,
-    "val2":number,
-    "val3":number,
-    "val4":string
-    }
+}
 ]
 
