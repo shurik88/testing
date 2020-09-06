@@ -3,12 +3,12 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <p *ngIf="!forecasts"><em>Loading...</em></p>
-<div class="row" *ngIf="forecasts">
+<div class="container" *ngIf="forecasts">
   <div class="row form-inline">
     <input type="number" step="1" max="10" min="1" [(ngModel)]="count" class="form-control ml-3" />
     <input type="button" value="Обновить" (click)="refresh()" class="btn btn-sm btn-success ml-3" />
   </div>
-  <div class="row">
+  <div class="row form-inline">
     <table class='table table-striped' aria-labelledby="tableLabel">
       <thead>
         <tr>
