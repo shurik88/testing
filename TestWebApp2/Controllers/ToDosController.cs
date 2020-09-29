@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using TestWebApp2.Model;
@@ -10,14 +9,14 @@ using TestWebApp2.Model;
 namespace TestWebApp2.Controllers
 {
     /// <summary>
-    ///     Контроллер для рабоыт со списком дел
+    ///     Контроллер для работы со списком дел
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ToDosController: ControllerBase
     {
         private readonly IMongoDatabase _db;
-        private readonly IMongoCollection<TestWebApp2.Model.ToDo> _todos;
+        private readonly IMongoCollection<ToDo> _todos;
         public ToDosController(IMongoDatabase database)
         {
             _db = database ?? throw new ArgumentNullException(nameof(database));
@@ -31,7 +30,7 @@ namespace TestWebApp2.Controllers
         [HttpGet]
         public IEnumerable<ToDoDto> Get()
         {
-            return _todos.AsQueryable<ToDo>().ToList().Select(x => new ToDoDto { Id = x.Id, Priority = x.Priority, Text = x.Text });
+            return _todos.AsQueryable().ToList().Select(x => new ToDoDto { Id = x.Id, Priority = x.Priority, Text = x.Text });
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         public IActionResult GetById(Guid id)
         {
-            var todo = _todos.AsQueryable<ToDo>().FirstOrDefault(x => x.Id == id);
+            var todo = _todos.AsQueryable().FirstOrDefault(x => x.Id == id);
             if (todo == null)
                 return NotFound(id);
 
