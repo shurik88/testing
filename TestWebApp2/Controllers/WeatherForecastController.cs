@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace TestWebApp2.Controllers
 {
+    /// <summary>
+    ///     Контроллер для рбаоты с прогнозом погоды
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -23,6 +25,14 @@ namespace TestWebApp2.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        ///     Получение прогноза погоды
+        /// </summary>
+        /// <param name="count">Кол-во записей</param>
+        /// <returns>Прогноз погоды</returns>
+        /// <response code="400">Если количество элементов меньше 1 или больше 10</response> 
+        [ProducesResponseType(400, Type = typeof(string))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<WeatherForecast>))]
         [HttpGet]
         public IActionResult Get(int count=5)
         {
