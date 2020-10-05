@@ -1,29 +1,29 @@
-using System;
+п»їusing System;
 
 namespace TestWebApp2
 {
     /// <summary>
-    ///     Прогноз погоды
+    ///     РџСЂРѕРіРЅРѕР· РїРѕРіРѕРґС‹
     /// </summary>
     public class WeatherForecast
     {
         /// <summary>
-        ///     Дата
+        ///     Р”Р°С‚Р°
         /// </summary>
         public DateTime Date { get; set; }
 
         /// <summary>
-        ///     Температура по Цельсию
+        ///     РўРµРјРїРµСЂР°С‚СѓСЂР° РїРѕ Р¦РµР»СЊСЃРёСЋ
         /// </summary>
         public int TemperatureC { get; set; }
 
         /// <summary>
-        ///     Температура по Фаренгейту
+        ///     РўРµРјРїРµСЂР°С‚СѓСЂР° РїРѕ Р¤Р°СЂРµРЅРіРµР№С‚Сѓ
         /// </summary>
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
         /// <summary>
-        ///     Подробно
+        ///     РџРѕРґСЂРѕР±РЅРѕ
         /// </summary>
         public string Summary { get; set; }
     }
