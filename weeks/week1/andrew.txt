@@ -1,0 +1,94 @@
+
+
+
+Request5
+
+PUT 
+HTTP/1.1
+/api/todos/{{id}}
+
+"id":string
+
+{"id":string,"text":string,"priority":number}
+
+Response5
+
+200 OK
+
+{"id":string,"text":string,"priority":number}
+
+
+
+Request4
+
+DELETE 
+HTTP/1.1
+/api/todos/{{id}}
+
+"id":string
+
+Response4
+
+204 No Content
+
+
+
+Request3
+
+POST 
+HTTP/1.1
+/api/todos 
+
+{"id":null,"text":string,"priority":number}
+
+Response3 
+
+200 OK
+
+{"id":string,"text":string,"priority":number}
+
+
+
+Request2
+
+GET 
+HTTP/1.1
+/api/todos
+
+Response2
+
+200 OK
+
+[
+    Object {
+    "id":string,
+    "text":string,
+    "priority":number
+    }
+]
+
+
+
+Request1
+
+GET 
+HTTP/1.1
+/api/weatherforecast
+?count={{id}}
+
+"id": number
+
+Response1
+
+200 OK
+	
+[
+Object
+    { 
+    "val1":string,
+    "val2":number,
+    "val3":number,
+    "val4":string
+}
+]
+
