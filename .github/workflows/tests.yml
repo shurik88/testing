@@ -8,7 +8,7 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, week1, week2 ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,26 +33,4 @@ jobs:
     # run dotnet build -c Release
     - name: Build Solution
       run: dotnet build -c Release --no-restore
-  test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build the stack
-        run: docker-compose up -d
-        working-directory: ${{ github.workspace }}/TestWebApp2
-      - name: Run newman tests
-        uses: matt-ball/newman-action@master
-        with:
-          collection: ${{ github.workspace }}/test/Testing.postman_collection.json
-          environment: ${{ github.workspace }}/test/testing.postman_environment.json
-          bail: true
-          workingDir: ${{ github.workspace }}/test
-          reporters : "cli,junit"
-          reporter: '{"junit" : { "export" : "${{ github.workspace }}/xmlResults.xml" } }'
-      - name: Publish newman results
-        uses: actions/upload-artifact@v2
-        with:
-          name: newman
-          path: ${{ github.workspace }}/xmlResults.xml
     
