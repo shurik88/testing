@@ -1,84 +1,180 @@
 {
 	"info": {
-		"_postman_id": "05610ff5-c28c-4390-a92e-d939458e3f89",
+		"_postman_id": "d4a55707-a576-4f70-a60e-f7d6d365a687",
 		"name": "Testing",
+		"description": "Testing api for education",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Test",
-			"item": [
+			"name": "Weather",
+			"event": [
 				{
-					"name": "Get forecast",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "bba0a440-4126-483d-8671-13bb0fbd8b99",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"var schema = {\r",
-									"    \"type\": \"array\",\r",
-									"    \"items\":[{\r",
-									"        \"type\":\"object\",\r",
-									"        \"properties\":{\r",
-									"            \"date\":{\r",
-									"                \"type\":\"string\"\r",
-									"            },\r",
-									"            \"temperatureF\":{\r",
-									"                \"type\":\"number\"\r",
-									"            },\r",
-									"            \"temperatureC\":{\r",
-									"                \"type\":\"number\"\r",
-									"            },\r",
-									"            \"summary\":{\r",
-									"                \"type\":\"string\"\r",
-									"            },\r",
-									"        },\r",
-									"        \"required\": [\r",
-									"            \"summary\",\r",
-									"            \"temperatureC\",\r",
-									"            \"temperatureF\",\r",
-									"            \"date\"\r",
-									"        ]\r",
-									"    }]\r",
-									"};\r",
-									"\r",
-									"pm.test(\"Validate schema\", () => {\r",
-									"     pm.response.to.have.jsonSchema(schema);\r",
-									"     \r",
-									"});\r",
-									"\r",
-									"pm.test(\"Forecast length 4\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.length).to.eq(4);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
+					"listen": "test",
+					"script": {
+						"id": "bb3ce1d1-7782-4d9c-9c6e-84e49b931def",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							"var schema = {\r",
+							"    \"type\": \"array\",\r",
+							"    \"items\":[\r",
+							"        {\r",
+							"            \"type\":\"object\",\r",
+							"            \"properties\":{\r",
+							"                \"date\":{\r",
+							"                    \"type\":\"string\"\r",
+							"                    },\r",
+							"                \"temperatureF\":{\r",
+							"                    \"type\":\"number\"\r",
+							"                },\r",
+							"                \"temperatureC\":{\r",
+							"                    \"type\":\"number\"\r",
+							"                },\r",
+							"                \"summary\":{\r",
+							"                    \"type\":\"string\"\r",
+							"                },\r",
+							"            },\r",
+							"            \"required\": [\"summary\",\"temperatureC\", \"temperatureF\", \"date\"],\r",
+							"        }\r",
+							"        ]\r",
+							"    };\r",
+							"    pm.test(\"Validate schema\", () => {\r",
+							"        pm.response.to.have.jsonSchema(schema);\r",
+							"    });\r",
+							"    pm.test(\"Forecast length 4\", function () {\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.length).to.eq(4);\r",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/weatherforecast?count=4",
+					"host": [
+						"{{host}}"
 					],
-					"request": {
+					"path": [
+						"api",
+						"weatherforecast"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get 2",
+					"originalRequest": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/weatherforecast",
+							"raw": "{{url}}/api/weatherforecast?count=2",
 							"host": [
-								"{{host}}"
+								"{{url}}"
 							],
 							"path": [
 								"api",
 								"weatherforecast"
+							],
+							"query": [
+								{
+									"key": "count",
+									"value": "2"
+								}
 							]
 						}
 					},
-					"response": []
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 19 Jul 2020 14:45:10 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"date\": \"2020-07-20T14:45:11.6229273+00:00\",\n        \"temperatureC\": 24,\n        \"temperatureF\": 75,\n        \"summary\": \"Hot\"\n    },\n    {\n        \"date\": \"2020-07-21T14:45:11.6229616+00:00\",\n        \"temperatureC\": 46,\n        \"temperatureF\": 114,\n        \"summary\": \"Cool\"\n    }\n]"
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
+		},
+		{
+			"name": "Get ToDo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/todos",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"todos"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "360b706f-4bcd-4dc9-a2d9-5c2f773b237f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e73936d1-a7aa-41df-9272-4f9b8760413d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ab7b3943-c36d-4b93-a955-eb97730e3300",
+			"key": "url",
+			"value": "http://DESKTOP-PICEHTG:5000",
+			"disabled": true
 		}
 	],
 	"protocolProfileBehavior": {}

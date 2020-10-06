@@ -23,7 +23,7 @@ services:
  mongo_image:
   image: mongo:4.2.8
   ports:
-   - "27017:27017"
+   - "27018:27017"
   restart: always
   networks:
    - webapp2-net
