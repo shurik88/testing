@@ -53,6 +53,12 @@
 4) запускаем метод Post с некорректными данными, то есть всё то же самое с полем Priority что описано выше для метода Put
 получаем статус код 400 и в теле ответа  "The field Priority must be between 1 and 10."
 5) запускаем метод Post  с пустыми полями text и priority, получаем статус код 400
+6) запускаем метод Post  с пустым полем text и priority=3 - получаем 400 ("errors": {
+    "Text": [
+      "The Text field is required.")
+7) запускаем метод Post  с заполненным полем text и пустым priority - получаем 400 (priority": [
+      "'}' is an invalid start of a value.)
+8) вставляем в srting очень много букв без пробелов, запускаем метод Post - получаем 400 ( "The field Text must be a string or array type with a maximum length of '50'.") 
 
 
 метод Get - получение дела
