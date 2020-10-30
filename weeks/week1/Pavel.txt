@@ -47,8 +47,8 @@ http://dell-pavel:5000/api/todos
 http://dell-pavel:5000/api/todos/10df58bb-d996-4ebf-a94f-3a2657f17e7e
 Метод запроса: DELETE 
 Схема или протокол запроса: http 
-Путь запроса(query path): /api/todos
-Строка запроса(query string): 10df58bb-d996-4ebf-a94f-3a2657f17e7e
+Путь запроса(query path): /api/todos/10df58bb-d996-4ebf-a94f-3a2657f17e7e
+Строка запроса(query string): нет
 Статус код ответа: 204 No Content
 Тело запроса (подробное описание json): нет
 Тело ответа (подробное описание json): нет
