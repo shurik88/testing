@@ -1,0 +1,200 @@
+http://dell-pavel:5000/api/weatherforecast?count=5
+Метод запроса: GET 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/weatherforecast
+Строка запроса(query string): count=5
+Статус код ответа: 200 OK
+Тело запроса (подробное описание json): нет
+Тело ответа (подробное описание json): массив объектов из двух строк и двух чисел, где count колличество объектов массива
+[
+  {
+    "date": строка,
+    "temperatureC": число,
+    "temperatureF": число,
+    "summary": строка
+  }
+]
+Комментарий: так же корректно отрабатывает при count от 1 до 10 
+
+http://dell-pavel:5000/api/weatherforecast?count=0
+Метод запроса: GET 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/weatherforecast
+Строка запроса(query string): count=0
+Статус код ответа: 400 Bad Request
+Тело запроса (подробное описание json): нет
+Тело ответа (подробное описание json): нет
+Комментарий: так же некорректно отрабатывает при отрицательных count и от 11 и более
+
+http://dell-pavel:5000/api/todos
+Метод запроса: GET 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): нет
+Статус код ответа: 200 OK
+Тело запроса (подробное описание json): нет
+Тело ответа (подробное описание json): массив объектов из двух строк и числа
+[
+  {
+    "id": строка,
+    "text": строка,
+    "priority": число
+  }
+]
+Комментарий:такой результат в случае перехода по ссылке ToDo list, если ранее были добавлены объекты. 
+Тело ответа пустое, если не были добавлены объекты.
+
+http://dell-pavel:5000/api/todos/10df58bb-d996-4ebf-a94f-3a2657f17e7e
+Метод запроса: DELETE 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos/10df58bb-d996-4ebf-a94f-3a2657f17e7e
+Строка запроса(query string): нет
+Статус код ответа: 204 No Content
+Тело запроса (подробное описание json): нет
+Тело ответа (подробное описание json): нет
+Комментарий: удаление объекта
+
+http://dell-pavel:5000/api/todos
+Метод запроса: POST 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): нет
+Статус код ответа: 200 OK
+Тело запроса (подробное описание json): 
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Тело ответа (подробное описание json):
+{
+  "id": строка,
+  "text": строка,
+  "priority": число
+}
+Комментарий: добавление объекта, приоритет от 1 до 10 
+
+http://dell-pavel:5000/api/todos
+Метод запроса: POST 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): нет
+Статус код ответа: 400 Bad Request
+Тело запроса (подробное описание json): 
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Тело ответа (подробное описание json):
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1", 
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "|890d7d17-49c42ed00ce3d663.",
+  "errors": {
+    "Priority": [
+      "The field Priority must be between 1 and 10."
+    ]
+  }
+}
+Комментарий: неудачная попытка добавления объекта, ошибка значения приоритета
+
+
+http://dell-pavel:5000/api/todos
+Метод запроса: POST 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): нет
+Статус код ответа: 400 Bad Request
+Тело запроса (подробное описание json): 
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Тело ответа (подробное описание json):
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "|890d7d19-49c42ed00ce3d663.",
+  "errors": {
+    "Text": [
+      "The Text field is required."
+    ]
+  }
+}
+Комментарий: неудачная попытка добавления объекта, ошибка значения текст, пустое поле
+
+http://dell-pavel:5000/api/todos/201b79fa-3c8a-4bac-bc56-2a88a4c16cdc
+Метод запроса: PUT 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): 201b79fa-3c8a-4bac-bc56-2a88a4c16cdc
+Статус код ответа: 200 OK
+Тело запроса (подробное описание json):
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Тело ответа (подробное описание json):
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Комментарий: изменение объекта
+
+http://dell-pavel:5000/api/todos/201b79fa-3c8a-4bac-bc56-2a88a4c16cdc
+Метод запроса: PUT 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): 201b79fa-3c8a-4bac-bc56-2a88a4c16cdc
+Статус код ответа: 400 Bad Request
+Тело запроса (подробное описание json):
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Тело ответа (подробное описание json):
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "|890d7d1d-49c42ed00ce3d663.",
+  "errors": {
+    "Priority": [
+      "The field Priority must be between 1 and 10."
+    ]
+  }
+}
+Комментарий: неудачная попытка изменение объекта, ошибка значения приоритета
+
+http://dell-pavel:5000/api/todos/201b79fa-3c8a-4bac-bc56-2a88a4c16cdc
+Метод запроса: PUT 
+Схема или протокол запроса: http 
+Путь запроса(query path): /api/todos
+Строка запроса(query string): 201b79fa-3c8a-4bac-bc56-2a88a4c16cdc
+Статус код ответа: 400 Bad Request
+Тело запроса (подробное описание json):
+{
+  "id": значение отсутствует,
+  "text": строка,
+  "priority": число
+}
+Тело ответа (подробное описание json):
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "|890d7d1c-49c42ed00ce3d663.",
+  "errors": {
+    "Text": [
+      "The Text field is required."
+    ]
+  }
+}
+Комментарий: неудачная попытка изменение объекта, ошибка значения текст, пустое поле
