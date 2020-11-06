@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TestWebApp2.Model
+namespace TestWebApp2.Contracts
 {
     /// <summary>
     /// Дело
@@ -26,5 +26,22 @@ namespace TestWebApp2.Model
         [Required]
         [Range(1, 10)]
         public int Priority { get; set; }
+
+        /// <summary>
+        /// Дедлайн
+        /// </summary>
+        public DateTime? Deadline { get; set; }
+
+        /// <summary>
+        /// Теги
+        /// </summary>
+        [MaxLength(3, ErrorMessage = "Max tags count of 3 exceeded")]
+        [MinLength(1, ErrorMessage = "Required at least 1 item")]
+        public string[] Tags { get; set; }
+
+        /// <summary>
+        /// Предполагаемый исполнитель
+        /// </summary>
+        public AssignerDto AssignedTo { get; set; }
     }
 }
