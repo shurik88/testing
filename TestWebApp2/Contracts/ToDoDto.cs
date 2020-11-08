@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TestWebApp2.DataAnnotations;
 
 namespace TestWebApp2.Contracts
 {
@@ -30,6 +31,7 @@ namespace TestWebApp2.Contracts
         /// <summary>
         /// Дедлайн
         /// </summary>
+        //[CurrentDate(ErrorMessage = "Deadline should greater or equal than current date")]
         public DateTime? Deadline { get; set; }
 
         /// <summary>

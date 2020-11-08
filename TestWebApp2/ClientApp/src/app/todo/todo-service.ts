@@ -18,10 +18,16 @@ export class ToDoService {
   }
 
   createToDo(todo: ToDo) {
+    if (todo.tags != null && todo.tags.length === 0) {
+      todo.tags = null;
+    }
     return this.http.post(`${this.url}`, todo);
   }
 
   updateToDo(todo: ToDo) {
+    if (todo.tags != null && todo.tags.length === 0) {
+      todo.tags = null;
+    }
     return this.http.put(`${this.url}/${todo.id}`, todo);
   }
 

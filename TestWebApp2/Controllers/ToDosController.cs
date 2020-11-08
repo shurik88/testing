@@ -27,14 +27,12 @@ namespace TestWebApp2.Controllers
         /// <summary>
         ///     Получение списка дел
         /// </summary>
-        /// <param name="search">Поиск по тексту дела или тегам</param>
         /// <returns>Дела</returns>
         [HttpGet]
-        public IEnumerable<ToDoDto> Get(string search = null)
+        public IEnumerable<ToDoDto> Get()
         {
             return _todos
                 .AsQueryable()
-                .Where(x => string.IsNullOrEmpty(search) || x.Text.Contains(search) || x.Tags.Contains(search))
                 .ToList()
                 .Select(MapReverse);
         }
@@ -100,7 +98,7 @@ namespace TestWebApp2.Controllers
                 Id = item.Id,
                 Priority = item.Priority,
                 Text = item.Text,
-                AssignedTo = item.AssignedTo != null ? new AssignerDto { Email = item.AssignedTo.Email, Name = item.AssignedTo.Email } : null,
+                AssignedTo = item.AssignedTo != null ? new AssignerDto { Email = item.AssignedTo.Email, Name = item.AssignedTo.Name } : null,
                 Deadline = item.Deadline,
                 Tags = item.Tags
             };
@@ -111,7 +109,7 @@ namespace TestWebApp2.Controllers
                 Id = item.Id != null ? item.Id.Value : Guid.NewGuid(),
                 Priority = item.Priority,
                 Text = item.Text,
-                AssignedTo = item.AssignedTo != null ? new Assigner { Email = item.AssignedTo.Email, Name = item.AssignedTo.Email } : null,
+                AssignedTo = item.AssignedTo != null ? new Assigner { Email = item.AssignedTo.Email, Name = item.AssignedTo.Name } : null,
                 Deadline = item.Deadline,
                 Tags = item.Tags
             };

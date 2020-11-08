@@ -8,6 +8,9 @@
     <tr>
       <td>Текст</td>
       <td>Приоритет</td>
+      <td>Исполнитель</td>
+      <td>Дедлайн</td>
+      <td>Теги</td>
       <td></td>
     </tr>
   </thead>
@@ -16,6 +19,9 @@
       <ng-template [ngIf]="todo?.id != p.id" [ngIfElse]="edit">
         <td>{{p?.text}}</td>
         <td>{{p?.priority}}</td>
+        <td>{{p.assignedTo != null ? (p.assignedTo.name + '-' + p.assignedTo.email) : ''}}</td>
+        <td>{{p.deadline != null ? moment(p.deadline).format('LL') : ''}}</td>
+        <td>{{p.tags != null ? p.tags.join(',') : ''}}</td>
         <td>
           <button class="btn btn-sm btn-primary ml-3" (click)="editToDo(p)">Изменить</button>
           <button class="btn btn-sm btn-danger ml-3" (click)="delete(p)">Удалить</button>
@@ -34,6 +40,19 @@
     <input type="number" step="1" max="10" min="1" [(ngModel)]="todo.priority" class="form-control" />
   </td>
   <td>
+  </td>
+  <td>
+  </td>
+  <!--<td>
+    <input type="datetime" [(ngModel)]="todo.deadline" class="form-control" />
+  </td>-->
+  <td>
+    <ngx-tags-input class="form-control input-lg"
+                    [removeLastOnBackspace]="removeLastOnBackspace"
+                    [maxTags]="3"
+                    [(ngModel)]="tags" name="tags"></ngx-tags-input>
+  </td>
+  <td>
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success ml-3" />
     <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning ml-3" />
   </td>
@@ -43,11 +62,30 @@
 <ng-template #create>
   <div class="form-group">
     <label>Текст</label>
-    <input type="text" [(ngModel)]="todo.text" class="form-control" />
+    <input type="text" [(ngModel)]="todo.text" class="form-control" required />
   </div>
   <div class="form-group">
     <label>Приоритет</label>
-    <input type="number" step="1" max="10" min="1" [(ngModel)]="todo.priority" class="form-control" />
+    <input type="number" step="1" max="10" min="1" [(ngModel)]="todo.priority" class="form-control" required />
+  </div>
+  <div class="form-group">
+    <label>Дедлайн</label>
+    <div class="input-group">
+
+      <!--<input class="form-control" placeholder="yyyy-mm-dd"
+         name="dp" [(ngModel)]="todo.deadline" ngbDatepicker #d="ngbDatepicker">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+  </div>-->
+      <!--<dp-date-picker #dayPicker [(ngModel)]="todo.deadline"></dp-date-picker>-->
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Теги. Для добавления нажмите Enter</label>
+    <ngx-tags-input class="form-control input-lg"
+                    [removeLastOnBackspace]="removeLastOnBackspace"
+                    [maxTags] ="3"
+                    [(ngModel)]="tags" name="tags"></ngx-tags-input>
   </div>
   <div>
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success ml-3" />
