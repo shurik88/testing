@@ -3,12 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-//import { TagInputModule } from 'ngx-chips';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 // Import the library
 import { NgxTagsInputModule } from 'ngx-tags-input';
-import { DpDatePickerModule } from 'ng2-date-picker';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -27,13 +25,11 @@ import { ToDoComponent } from './todo/todo.component';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    //TagInputModule,
-    //BrowserAnimationsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     NgxTagsInputModule,
     FormsModule,
-    DpDatePickerModule,
-    //NgbModule,
+    NgbModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
