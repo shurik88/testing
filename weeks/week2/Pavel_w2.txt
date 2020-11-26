@@ -27,6 +27,91 @@
 []
 
 название: 
+Добавление нового дела (pairwise)
+предусловие: 
+Тело запроса(поле Дело) заполняется по схеме
+{
+    "id": "строка",
+    "text": "строка",
+    "priority": число
+}
+шаги:
+Подговим вводные параметры
+идентификатор: пустой, корректный, некорректный
+текст: пустой, от 1 до 50 символов, более 50 символов
+важность: пустой, 0, 1, 10, 5, -7, 14
+пропустим их через PICT
+выполнить метод POST путь запроса /api/ToDos
+тело запроса - поле Дело по схеме со следующими значениями:
+идентификатор	текст				важность	ожидаемый результат
+пустой			от 1 до 50 символов	5			400	Error: Bad Request (id value could not be converted)
+пустой			пустой				14			400	Error: Bad Request (id value could not be converted)
+пустой			более 50 символов	0			400	Error: Bad Request (id value could not be converted)
+пустой			пустой				10			400	Error: Bad Request (id value could not be converted)
+корректный		пустой				0			400	Error: Bad Request (text/priority - invalid start of a value)
+пустой			пустой				пустой		400	Error: Bad Request (id value could not be converted)
+некорректный	от 1 до 50 символов	10			400	Error: Bad Request (id value could not be converted)
+корректный		от 1 до 50 символов	пустой		400	Error: Bad Request (priority - invalid start of a value)
+пустой			более 50 символов	1			400	Error: Bad Request (id value could not be converted)
+корректный		более 50 символов	14			400	Error: Bad Request (The field Priority must be between 1 and 10)
+корректный		более 50 символов	10			400	Error: Bad Request (text maximum length of '50')
+некорректный	пустой				1			400	Error: Bad Request (id value could not be converted)
+некорректный	более 50 символов	-7			400	Error: Bad Request (id value could not be converted)
+некорректный	от 1 до 50 символов	14			400	Error: Bad Request (id value could not be converted)
+корректный		от 1 до 50 символов	-7			400	Error: Bad Request (The field Priority must be between 1 and 10)
+пустой			пустой				-7			400	Error: Bad Request (id value could not be converted)
+некорректный	пустой				5			400	Error: Bad Request (id value could not be converted)
+корректный		более 50 символов	5			400	Error: Bad Request (text maximum length of '50') 
+некорректный	более 50 символов	пустой		400	Error: Bad Request (id value could not be converted)
+корректный		от 1 до 50 символов	1			200 тело ответа с введенными данными дела
+некорректный	от 1 до 50 символов	0			400	Error: Bad Request (id value could not be converted)
+
+название: 
+Редактирование дела (pairwise)
+предусловие: 
+Поле Дело заполняется по схеме
+{
+    "id": "строка",
+    "text": "строка",
+    "priority": число
+}
+шаги:
+Подговим вводные параметры
+поле идентификатор: существующий, новый, некорректный
+идентификатор: пустой, корректный, некорректный
+текст: пустой, от 1 до 50 символов, более 50 символов
+важность: пустой, 0, 1, 10, 5, -7, 14
+пропустим их через PICT
+выполнить метод PUT путь запроса /api/ToDos/{id}
+тело запроса - поля индентификатор дела и поле Дело по схеме со следующими значениями:
+поле идентификатор	идентификатор	текст				важность	ожидаемый результат
+новый				пустой			пустой				1			400	Error: Bad Request (id value could not be converted)
+новый				корректный		от 1 до 50 символов	5			201 Дело с идентификатором не было найдено, поэтому было создано новое дело
+некорректный		некорректный	более 50 символов	14			400	Error: Bad Request (id value could not be converted)
+существующий		корректный		пустой				-7			400	Error: Bad Request (Text field is required/Priority must be between 1 and 10)		
+новый				пустой			более 50 символов	-7			400	Error: Bad Request (id value could not be converted)
+существующий		пустой			от 1 до 50 символов	14			400	Error: Bad Request (id value could not be converted)
+существующий		некорректный	пустой				пустой		400	Error: Bad Request (id value could not be converted)
+существующий		корректный		более 50 символов	10			400	Error: Bad Request (text maximum length of '50')
+некорректный		корректный		пустой				14			400	Error: Bad Request (The Text field is required)
+существующий		некорректный	от 1 до 50 символов	1			400	Error: Bad Request (id value could not be converted)
+некорректный		пустой			более 50 символов	5			400	Error: Bad Request (id value could not be converted)
+некорректный		пустой			от 1 до 50 символов	пустой		400	Error: Bad Request (id value could not be converted)
+существующий		некорректный	от 1 до 50 символов	0			400	Error: Bad Request (id value could not be converted)
+некорректный		некорректный	от 1 до 50 символов	-7			400	Error: Bad Request (id value could not be converted)
+новый				некорректный	пустой				10			400	Error: Bad Request (id value could not be converted)
+новый				корректный		более 50 символов	пустой		400	Error: Bad Request (text/priority - invalid start of a value)
+некорректный		пустой			от 1 до 50 символов	10			400	Error: Bad Request (id value could not be converted)
+существующий		некорректный	пустой				5			400	Error: Bad Request (id value could not be converted)
+новый				пустой			от 1 до 50 символов	14			400	Error: Bad Request (id value could not be converted)
+новый				пустой			пустой				0			400	Error: Bad Request (id value could not be converted)
+некорректный		корректный		более 50 символов	1			400	Error: Bad Request (text maximum length of '50')
+некорректный		корректный		более 50 символов	0			400	Error: Bad Request (text maximum length of '50'/Priority must be between 1 and 10)
+стоит еще добавить варианты
+существующий		корректный		от 1 до 50 символов	5			200 тело ответа с введенными данными дела
+некорректный		корректный		от 1 до 50 символов	6			500 Error: Internal Server Error
+
+название: 
 3.Добавление нового дела (успешно)
 шаги:
 1)выполнить метод POST путь запроса /api/ToDos
