@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "4f7c0512-8875-468f-919e-1cea0967f28d",
+		"name": "api_todo_andrew",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAllDos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9a05175e-dc6b-431a-9ef1-024cb560144e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/ToDos",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"ToDos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addNewDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b1224c3f-c557-4e7c-adf4-c712bb0d4d26",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f5e62de4-4feb-4a39-8f37-e6923a607bb2",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{IdCase}}\",\r\n  \"text\": \"{{textCase}}\",\r\n  \"priority\": {{priorityCase}},\r\n  \"deadline\": \"2020-12-03T09:38:18.777Z\",\r\n  \"tags\": [\r\n    \"string\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"{{nameAssigned}}\",\r\n    \"email\": \"{{emailAssigned}}\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/ToDos",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"ToDos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ced1733-f987-4c96-967a-04120d401983",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/ToDos/{{IdCase}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{IdCase}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "changeDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0aafa1b7-6dcd-4175-88d8-7ef210233461",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{IdCase}}\",\r\n  \"text\": \"32teeths\",\r\n  \"priority\": 4,\r\n  \"deadline\": \"2020-12-03T09:38:18.777Z\",\r\n  \"tags\": [\r\n    \"string\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"test13f4\",\r\n    \"email\": \"test13f4@example.com\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/ToDos/{{IdCase}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{IdCase}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc7db5c8-1d5c-44e1-a170-b8026ed8cc25",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/ToDos/{{IdCase}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{IdCase}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WeatherForecast",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8eed884-5715-45b0-953a-b4415deb9b24",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/WeatherForecast?count={{placeCount}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"WeatherForecast"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "{{placeCount}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ebe40af0-b53d-4bb1-bc45-d176492f21d6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f6b66909-e560-415b-bd58-0320826cba40",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
