@@ -9,9 +9,23 @@
 			"name": "Получение списка дел",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": ""
+					"raw": "{{baseURL}}/todo/api/ToDos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"todo",
+						"api",
+						"ToDos"
+					]
 				}
 			},
 			"response": []
@@ -29,7 +43,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"id\": null, \"text\": \"nтестим пост\", \"priority\": 4, \"deadline\": null, \"assignedTo\": null, \"tags\": null}\r\n",
+					"raw": "{\r\n  \"id\": \"7b525892-4ea4-4dec-8457-4f6b671af613\",\r\n  \"text\": \"{{тp}}}}\",\r\n  \"priority\": 3,\r\n  \"deadline\": \"2020-11-30T17:49:33.017Z\",\r\n  \"tags\": [\r\n    \"qwe\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string\",\r\n    \"email\": \"user@example.com\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,7 +76,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8\",\r\n    \"text\": \"nтестим пост\",\r\n    \"priority\": 4,\r\n    \"deadline\": null,\r\n    \"tags\": [\"a\", \"b\"],\r\n\r\n    \"assignedTo\": null\r\n}"
+					"raw": "{\r\n    \"id\": \"c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8\",\r\n    \"text\": \"{{тp}}\",\r\n    \"priority\": 4,\r\n    \"deadline\": null,\r\n    \"tags\": [\"a\", \"b\"],\r\n\r\n    \"assignedTo\": null\r\n}"
 				},
 				"url": {
 					"raw": "{{baseURL}}/api/ToDos/c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8",
@@ -84,8 +98,8 @@
 				"method": "DELETE",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
+						"key": "",
+						"value": "",
 						"type": "text"
 					}
 				],
@@ -94,14 +108,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseURL}}/api/ToDos/106b0368-d3ea-446b-ae67-b5b5cdd1f9ce",
+					"raw": "{{baseURL}}/api/ToDos/7393d498-b8e2-44ba-a94a-5a58b6f416aa",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"api",
 						"ToDos",
-						"106b0368-d3ea-446b-ae67-b5b5cdd1f9ce"
+						"7393d498-b8e2-44ba-a94a-5a58b6f416aa"
 					]
 				}
 			},
@@ -116,6 +130,12 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {

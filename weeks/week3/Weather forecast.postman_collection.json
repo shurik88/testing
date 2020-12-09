@@ -14,24 +14,29 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
+						"key": "",
+						"value": "",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  {\r\n    \"date\": \"2020-11-23T15:23:57.578Z\",\r\n    \"temperatureC\": 0,\r\n    \"temperatureF\": 0,\r\n    \"summary\": \"string\"\r\n  }\r\n]"
+					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseURL}}/api//WeatherForecast",
+					"raw": "{{baseURL}}/api/WeatherForecast?count=7",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"api",
-						"",
 						"WeatherForecast"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "7"
+						}
 					]
 				}
 			},
