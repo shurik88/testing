@@ -14,8 +14,8 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "",
-						"value": "",
+						"key": "Accept",
+						"value": "MIME_type/<MIME_subtype>",
 						"type": "text"
 					}
 				],

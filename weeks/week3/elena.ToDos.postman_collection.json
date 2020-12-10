@@ -11,8 +11,8 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "",
-						"value": "",
+						"key": "Accept",
+						"value": "MIME_type/<MIME_subtype>",
 						"type": "text"
 					}
 				],
@@ -43,7 +43,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"7b525892-4ea4-4dec-8457-4f6b671af613\",\r\n  \"text\": \"{{тp}}}}\",\r\n  \"priority\": 3,\r\n  \"deadline\": \"2020-11-30T17:49:33.017Z\",\r\n  \"tags\": [\r\n    \"qwe\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string\",\r\n    \"email\": \"user@example.com\"\r\n  }\r\n}",
+					"raw": "{\r\n\r\n  \"text\": \"{{тp}}}}\",\r\n  \"priority\": 3,\r\n  \"deadline\": \"2020-11-30T17:49:33.017Z\",\r\n  \"tags\": [\r\n    \"qwe\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string\",\r\n    \"email\": \"user@example.com\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -79,14 +79,14 @@
 					"raw": "{\r\n    \"id\": \"c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8\",\r\n    \"text\": \"{{тp}}\",\r\n    \"priority\": 4,\r\n    \"deadline\": null,\r\n    \"tags\": [\"a\", \"b\"],\r\n\r\n    \"assignedTo\": null\r\n}"
 				},
 				"url": {
-					"raw": "{{baseURL}}/api/ToDos/c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8",
+					"raw": "{{baseURL}}/api/ToDos/{{id}}",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"api",
 						"ToDos",
-						"c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8"
+						"{{id}}"
 					]
 				}
 			},
@@ -98,8 +98,8 @@
 				"method": "DELETE",
 				"header": [
 					{
-						"key": "",
-						"value": "",
+						"key": "Accept",
+						"value": "<MIME_type>/<MIME_subtype>",
 						"type": "text"
 					}
 				],
@@ -108,14 +108,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseURL}}/api/ToDos/7393d498-b8e2-44ba-a94a-5a58b6f416aa",
+					"raw": "{{baseURL}}/api/ToDos/{{id}}",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"api",
 						"ToDos",
-						"7393d498-b8e2-44ba-a94a-5a58b6f416aa"
+						"{{id}}"
 					]
 				}
 			},
@@ -139,18 +139,46 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseURL}}/api/ToDos/7393d498-b8e2-44ba-a94a-5a58b6f416aa",
+					"raw": "{{baseURL}}/api/ToDos/{{id}}",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"api",
 						"ToDos",
-						"7393d498-b8e2-44ba-a94a-5a58b6f416aa"
+						"{{id}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1a22b43a-e9ef-4e76-b247-e215be6c3834",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2e94e33a-8fe1-4540-8e02-b5ae03126f4b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "5b1d16d2-e8a3-43b6-9a38-9171ab4ef6b2",
+			"value": ""
 		}
 	],
 	"protocolProfileBehavior": {}
