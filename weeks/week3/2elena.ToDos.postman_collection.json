@@ -12,7 +12,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "MIME_type/<MIME_subtype>",
+						"value": "application/json, text/plain, */*",
 						"type": "text"
 					}
 				],
@@ -39,11 +39,16 @@
 						"key": "Content-Type",
 						"type": "text",
 						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n  \"text\": \"{{тp}}}}\",\r\n  \"priority\": 3,\r\n  \"deadline\": \"2020-11-30T17:49:33.017Z\",\r\n  \"tags\": [\r\n    \"qwe\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string\",\r\n    \"email\": \"user@example.com\"\r\n  }\r\n}",
+					"raw": "{\r\n\r\n  \"text\": \"{{text}}\",\r\n  \"priority\": {{priority}},\r\n  \"deadline\": \"{{deadline}}\",\r\n  \"tags\": {{tags}},\r\n  \"assignedTo\": {\r\n    \"name\": \"{{assignedToName}}\",\r\n    \"email\": \"{{assignedToEmail}}\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,11 +77,16 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "Accept-Charset",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"c4e775c1-fc67-41e6-a7d5-9fe3dfa416f8\",\r\n    \"text\": \"{{тp}}\",\r\n    \"priority\": 4,\r\n    \"deadline\": null,\r\n    \"tags\": [\"a\", \"b\"],\r\n\r\n    \"assignedTo\": null\r\n}"
+					"raw": "{\r\n    \"id\": \"{{id}}\",\r\n    \"text\": \"{{text}}\",\r\n    \"priority\": {{priority}},\r\n    \"deadline\": \"{{deadline}}\",\r\n    \"tags\": {{tags}},\r\n\r\n    \"assignedTo\": {\r\n    \"name\": \"{{assignedToName}}\",\r\n    \"email\": \"{{assignedToEmail}}\"\r\n  }\r\n}"
 				},
 				"url": {
 					"raw": "{{baseURL}}/api/ToDos/{{id}}",
@@ -99,7 +109,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "<MIME_type>/<MIME_subtype>",
+						"value": "application/json, text/plain, */*",
 						"type": "text"
 					}
 				],
@@ -123,6 +133,20 @@
 		},
 		{
 			"name": "Получение дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "441e857a-59ca-4694-8263-2e580fefe7fc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -177,7 +201,7 @@
 	],
 	"variable": [
 		{
-			"id": "5b1d16d2-e8a3-43b6-9a38-9171ab4ef6b2",
+			"id": "6a45068f-d129-4433-863f-329e6e2ab4da",
 			"value": ""
 		}
 	],

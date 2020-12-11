@@ -15,7 +15,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "MIME_type/<MIME_subtype>",
+						"value": "application/json, text/plain, */*",
 						"type": "text"
 					}
 				],
@@ -24,7 +24,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseURL}}/api/WeatherForecast?count=7",
+					"raw": "{{baseURL}}/api/WeatherForecast?{{count}}",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -34,8 +34,8 @@
 					],
 					"query": [
 						{
-							"key": "count",
-							"value": "7"
+							"key": "{{count}}",
+							"value": null
 						}
 					]
 				}
