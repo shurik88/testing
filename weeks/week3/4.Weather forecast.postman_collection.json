@@ -7,6 +7,20 @@
 	"item": [
 		{
 			"name": "Получение прогноза погоды",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eabded65-15c9-4413-8abe-972174807c4c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -24,7 +38,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseURL}}/api/WeatherForecast?{{count}}",
+					"raw": "{{baseURL}}/api/WeatherForecast?count={{count}}",
 					"host": [
 						"{{baseURL}}"
 					],
@@ -34,8 +48,8 @@
 					],
 					"query": [
 						{
-							"key": "{{count}}",
-							"value": null
+							"key": "count",
+							"value": "{{count}}"
 						}
 					]
 				}

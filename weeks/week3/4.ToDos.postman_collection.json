@@ -7,6 +7,20 @@
 	"item": [
 		{
 			"name": "Получение списка дел",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8141ece-81fb-4eb0-88ef-bd0870c102c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -32,6 +46,20 @@
 		},
 		{
 			"name": "Добавление нового дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "504bfa5d-9390-4581-87f9-5f79df4e91e7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -70,6 +98,20 @@
 		},
 		{
 			"name": "Редактирование дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2803093d-3ae8-4ee2-8e0a-1e1ed79597ac",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -104,6 +146,20 @@
 		},
 		{
 			"name": "Удаление дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "81ad5dc3-8003-4411-8b18-d1d351a730bc",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -141,6 +197,9 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -201,7 +260,7 @@
 	],
 	"variable": [
 		{
-			"id": "6a45068f-d129-4433-863f-329e6e2ab4da",
+			"id": "a7e4ae5a-c719-4f0e-a8ee-9c1fad5d37e2",
 			"value": ""
 		}
 	],
