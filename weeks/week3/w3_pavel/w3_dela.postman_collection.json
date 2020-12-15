@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "39b822b1-f6b3-41a2-abe3-27e541218d7a",
+		"_postman_id": "35489399-24d6-4df5-a5b3-3317e646bcd5",
 		"name": "w3_dela",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bad71655-d298-41f0-883c-91868691a60e",
+						"id": "e4b3d75d-b43e-473b-a77f-174eb318bf72",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -52,7 +52,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "83d7d84c-45fe-4b45-b276-ce13608c7f69",
+						"id": "e6566604-426f-4021-8a38-d628bbae64fa",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -73,7 +73,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": [\r\n      \"tegraz\", \"tegdva\", \"teg3\"\r\n    ],\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": {{testTags}},\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,7 +99,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a993df43-5aea-4416-8dbf-15ea231be404",
+						"id": "b4744c5e-edeb-4632-92a2-b21a04b4d470",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -141,7 +141,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d365cc25-54c4-4dab-8d7d-3d1a2c8cb0d0",
+						"id": "45e5e128-96d3-44fa-ae83-1ec2891d9c75",
 						"exec": [
 							"pm.test(\"Status code is 204\", function () {\r",
 							"    pm.response.to.have.status(204);\r",
@@ -177,7 +177,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "efc3bd19-aad3-4e9f-9ce5-b59926ee18c5",
+						"id": "16ba090f-8fc9-40db-92d7-0c5a72792072",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -198,7 +198,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": [\r\n      \"teg111\"\r\n    ],\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": {{testTags}},\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -224,7 +224,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "03df2273-501c-4dcd-999b-d32637f7a3dd",
+				"id": "7d233e85-7ec5-4677-bd06-ee066c645b14",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -234,7 +234,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "383485db-1aed-414d-91fd-1c118c7009eb",
+				"id": "5180b68b-12b1-4fbd-884b-ed88f9ba9ad8",
 				"type": "text/javascript",
 				"exec": [
 					""

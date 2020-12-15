@@ -36,13 +36,7 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -91,7 +85,7 @@
 	],
 	"variable": [
 		{
-			"id": "ad33599f-c451-4047-be3a-461912fb58cb",
+			"id": "eb8d87d9-dca0-4423-91e9-14c1acaf1140",
 			"key": "varCount",
 			"value": "2"
 		}
