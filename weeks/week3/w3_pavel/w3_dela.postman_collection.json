@@ -28,9 +28,9 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -41,13 +41,6 @@
 					"path": [
 						"api",
 						"ToDos"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -80,7 +73,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}}\r\n}",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": [\r\n      \"tegraz\", \"tegdva\", \"teg3\"\r\n    ],\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -123,9 +116,9 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -150,8 +143,8 @@
 					"script": {
 						"id": "d365cc25-54c4-4dab-8d7d-3d1a2c8cb0d0",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
 							"});\r",
 							"pm.test(\"Response time is less than 400ms\", function () {\r",
 							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
@@ -163,13 +156,7 @@
 			],
 			"request": {
 				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "{{mainURL}}/api/ToDos/{{deleteId}}",
 					"host": [
@@ -211,7 +198,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}}\r\n}",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": [\r\n      \"teg111\"\r\n    ],\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
