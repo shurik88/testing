@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "9b72409a-d18c-45e6-a2bf-131d3b278589",
+		"name": "w3_pogoda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cbor_pogodi",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "53d7d6ae-705f-4f49-8907-4d55017d6842",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d3ddf596-a939-4c39-8c11-6c20e35d0a2a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mainURL}}/api/WeatherForecast?count={{varCount}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"WeatherForecast"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "{{varCount}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "041d266b-9f1f-40f9-afcd-f57dbc798230",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "55b95317-6e85-47e8-ba11-f0742f483f6d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "eb8d87d9-dca0-4423-91e9-14c1acaf1140",
+			"key": "varCount",
+			"value": "2"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

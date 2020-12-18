@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "35489399-24d6-4df5-a5b3-3317e646bcd5",
+		"name": "w3_dela",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "poluchit_spisok_del",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4b3d75d-b43e-473b-a77f-174eb318bf72",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dobavlenie_novogo_dela",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6566604-426f-4021-8a38-d628bbae64fa",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": {{testTags}},\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainURL}}/api/todos",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "poluchenie_dela",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b4744c5e-edeb-4632-92a2-b21a04b4d470",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos/{{testId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "udalenie_dela",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "45e5e128-96d3-44fa-ae83-1ec2891d9c75",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos/{{deleteId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{deleteId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redaktirovanie_dela",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16ba090f-8fc9-40db-92d7-0c5a72792072",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": {{testTags}},\r\n  \"assignedTo\": {\r\n      \"name\": \"{{assignedtoName}}\",\r\n      \"email\": \"{{assignedtoEmail}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainURL}}/api/todos/{{testId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"todos",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7d233e85-7ec5-4677-bd06-ee066c645b14",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5180b68b-12b1-4fbd-884b-ed88f9ba9ad8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
