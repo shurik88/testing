@@ -1,0 +1,14 @@
+{
+	"id": "3a9dc506-6a76-47a2-8993-6854ead19dd4",
+	"values": [
+		{
+			"key": "mainURL",
+			"value": "http://dell-pavel:5000",
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2020-12-11T06:51:16.364Z",
+	"_postman_exported_using": "Postman/7.36.0"
+}

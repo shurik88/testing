@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "24a42a72-2b15-4096-bebf-e0ffeaf24ca4",
+		"name": "ToDos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Получение списка дел",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8141ece-81fb-4eb0-88ef-bd0870c102c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/todo/api/ToDos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"todo",
+						"api",
+						"ToDos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление нового дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "504bfa5d-9390-4581-87f9-5f79df4e91e7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n  \"text\": \"{{text}}\",\r\n  \"priority\": {{priority}},\r\n  \"deadline\": \"{{deadline}}\",\r\n  \"tags\": {{tags}},\r\n  \"assignedTo\": {\r\n    \"name\": \"{{assignedToName}}\",\r\n    \"email\": \"{{assignedToEmail}}\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/ToDos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Редактирование дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2803093d-3ae8-4ee2-8e0a-1e1ed79597ac",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Charset",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{id}}\",\r\n    \"text\": \"{{text}}\",\r\n    \"priority\": {{priority}},\r\n    \"deadline\": \"{{deadline}}\",\r\n    \"tags\": {{tags}},\r\n\r\n    \"assignedTo\": {\r\n    \"name\": \"{{assignedToName}}\",\r\n    \"email\": \"{{assignedToEmail}}\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/ToDos/{{id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "81ad5dc3-8003-4411-8b18-d1d351a730bc",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/ToDos/{{id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение дела",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "441e857a-59ca-4694-8263-2e580fefe7fc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/api/ToDos/{{id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1a22b43a-e9ef-4e76-b247-e215be6c3834",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2e94e33a-8fe1-4540-8e02-b5ae03126f4b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a7e4ae5a-c719-4f0e-a8ee-9c1fad5d37e2",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

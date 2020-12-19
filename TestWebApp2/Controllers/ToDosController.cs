@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using TestWebApp2.Contracts;
 using TestWebApp2.Model;
 
 namespace TestWebApp2.Controllers
@@ -30,7 +31,10 @@ namespace TestWebApp2.Controllers
         [HttpGet]
         public IEnumerable<ToDoDto> Get()
         {
-            return _todos.AsQueryable().ToList().Select(x => new ToDoDto { Id = x.Id, Priority = x.Priority, Text = x.Text });
+            return _todos
+                .AsQueryable()
+                .ToList()
+                .Select(MapReverse);
         }
 
         /// <summary>
@@ -49,7 +53,7 @@ namespace TestWebApp2.Controllers
             if (todo == null)
                 return NotFound(id);
 
-            return Ok(new ToDoDto { Id = todo.Id, Priority = todo.Priority, Text = todo.Text });
+            return Ok(MapReverse(todo));
         }
 
         /// <summary>
@@ -64,7 +68,7 @@ namespace TestWebApp2.Controllers
         public IActionResult PostAdd([FromBody] ToDoDto item)
         {
             item.Id = Guid.NewGuid();
-            _todos.InsertOne(new ToDo { Id = item.Id.Value, Priority = item.Priority, Text = item.Text });
+            _todos.InsertOne(Map(item));
 
             return Ok(item);
         }
@@ -88,6 +92,27 @@ namespace TestWebApp2.Controllers
 
             return NoContent();
         }
+        private static ToDoDto MapReverse(ToDo item) =>
+            new ToDoDto
+            {
+                Id = item.Id,
+                Priority = item.Priority,
+                Text = item.Text,
+                AssignedTo = item.AssignedTo != null ? new AssignerDto { Email = item.AssignedTo.Email, Name = item.AssignedTo.Name } : null,
+                Deadline = item.Deadline,
+                Tags = item.Tags
+            };
+
+        private static ToDo Map(ToDoDto item) =>
+            new ToDo
+            {
+                Id = item.Id != null ? item.Id.Value : Guid.NewGuid(),
+                Priority = item.Priority,
+                Text = item.Text,
+                AssignedTo = item.AssignedTo != null ? new Assigner { Email = item.AssignedTo.Email, Name = item.AssignedTo.Name } : null,
+                Deadline = item.Deadline,
+                Tags = item.Tags
+            };
 
         /// <summary>
         ///     Редактирование дела
@@ -102,13 +127,15 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         [ProducesResponseType(201, Type = typeof(ToDoDto))]
-        public IActionResult PutEdit(string id, [FromBody] ToDoDto item)
+        public IActionResult PutEdit(Guid id, [FromBody] ToDoDto item)
         {
-            var replacedItem = _todos.FindOneAndReplace(x => x.Id == Guid.Parse(id), new ToDo { Id = Guid.Parse(id), Priority = item.Priority, Text = item.Text });
+            var itemToReplaced = Map(item);
+            itemToReplaced.Id = id;
+            var replacedItem = _todos.FindOneAndReplace(x => x.Id == id, itemToReplaced);
             if (replacedItem != null)
                 return Ok(item);
 
-            _todos.InsertOne(new ToDo { Id = Guid.Parse(id), Priority = item.Priority, Text = item.Text });
+            _todos.InsertOne(itemToReplaced);
 
             return StatusCode(201, item);
         }

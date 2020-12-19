@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "6acc853d-0186-4e52-a52b-1bc499b52830",
+		"name": "Weather forecast",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Получение прогноза погоды",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eabded65-15c9-4413-8abe-972174807c4c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/WeatherForecast?count={{count}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"WeatherForecast"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "{{count}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

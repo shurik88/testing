@@ -29,12 +29,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\todo\assigner.ts" />
     <None Remove="ClientApp\src\app\todo\todo-service.ts" />
     <None Remove="ClientApp\src\app\todo\todo.component.ts" />
     <None Remove="ClientApp\src\app\todo\todo.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\todo\assigner.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo.ts" />
