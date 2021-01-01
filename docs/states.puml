@@ -1,0 +1,9 @@
+@startuml ToDo State Diagram
+[*] -> Started: Start
+Started -up-> Paused: Pause
+Paused -> Started: Resume
+Started -down->Cancelled: Cancel
+Started -> Finished: Finished
+Finished -down-> [*]
+Cancelled -> [*] 
+@enduml

@@ -1,6 +1,8 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
+using System.Collections.Generic;
+using TestWebApp2.Contracts;
 
 namespace TestWebApp2.Model
 {
@@ -21,5 +23,17 @@ namespace TestWebApp2.Model
 
         [BsonIgnoreIfNull]
         public Assigner AssignedTo { get; set; }
+
+        [BsonDefaultValue(ToDoStatus.Created)]
+        public ToDoStatus Status { get; set; }
+
+        [BsonIgnoreIfNull]
+        public ICollection<ToDoActionLog> Log { get; set; }
+
+        [BsonIgnoreIfNull]
+        public string CancelReason { get; set; }
+
+        [BsonIgnoreIfNull]
+        public int? FactDuration { get; set; }
     }
 }

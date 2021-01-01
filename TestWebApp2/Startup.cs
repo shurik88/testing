@@ -8,6 +8,9 @@ using MongoDB.Driver;
 using System;
 using System.IO;
 using System.Reflection;
+using TestWebApp2.Filters;
+using TestWebApp2.gServices;
+using TestWebApp2.Interceptors;
 
 namespace TestWebApp2
 {
@@ -25,7 +28,12 @@ namespace TestWebApp2
         {
             services.AddControllersWithViews()
                 .AddXmlSerializerFormatters()
-                .AddXmlDataContractSerializerFormatters();
+                .AddXmlDataContractSerializerFormatters()
+                .AddMvcOptions(options =>
+                {
+                    options.Filters.Add(typeof(ApiExceptionFilterAttribute));
+                });
+
 
             var mongoUrl = new MongoUrl(Configuration.GetValue<string>("mongo:connectionString"));
             var database = mongoUrl.DatabaseName;
@@ -46,6 +54,12 @@ namespace TestWebApp2
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddGrpc(options =>
+            {
+                options.Interceptors.Add<ExceptionInterceptor>();
+            });
+            services.AddGrpcReflection();
 
         }
 
@@ -84,6 +98,13 @@ namespace TestWebApp2
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+
+                endpoints.MapGrpcService<ToDoExecutionService>();
+
+                if (env.IsDevelopment())
+                {
+                    endpoints.MapGrpcReflectionService();
+                }
             });
 
             app.UseSpa(spa =>

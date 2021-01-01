@@ -3,6 +3,8 @@ import { ToDoService } from './todo-service';
 import * as moment from 'moment';
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
+import { ToDoStatus } from './todoStatus';
+//import { } from './todoStatus';
 //import { DatePickerComponent } from 'ng2-date-picker';
 
 
@@ -54,7 +56,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   providers: [ToDoService, { provide: NgbDateAdapter, useClass: CustomAdapter }]
 })
 export class ToDoComponent {
-  todo: ToDo = { id: null, text: "", priority: 1, deadline: null, assignedTo: null, tags: [] };
+  todo: ToDo = { id: null, text: "", priority: 1, deadline: null, assignedTo: null, tags: [], status: ToDoStatus.created };
   todos: ToDo[];              
   tableMode = true;          // табличный режим
   moment: any = moment;
@@ -73,6 +75,7 @@ export class ToDoComponent {
   ngOnInit() {
     this.loadToDos();    // загрузка данных при старте компонента  
   }
+
   // получаем данные через сервис
   loadToDos() {
     this.service.getToDos()
@@ -88,10 +91,50 @@ export class ToDoComponent {
       this.service.createToDo(this.todo)
         .subscribe((data: ToDo) => this.todos.push(data));
     } else {
-      this.service.updateToDo(this.todo)
+      this.service.updateToDo(this.todo.id, this.todo)
         .subscribe(() => this.loadToDos());
     }
     this.cancel();
+  }
+
+  getStatusName(p: ToDo): string {
+    if (!p)
+      return '';
+
+    switch (p.status) {
+      case ToDoStatus.created:
+        return "Создана";
+      case ToDoStatus.started:
+        return "Начата";
+      case ToDoStatus.paused:
+        return "Остановлена";
+      case ToDoStatus.cancelled:
+        return "Отменена";
+      case ToDoStatus.finished:
+        return "Завершена";
+      default:
+        throw new Error(`unknown todo status: ${p.status}`);
+    }
+  }
+
+  getStatusClassName(p: ToDo): string {
+    if (!p)
+      return '';
+
+    switch (p.status) {
+      case ToDoStatus.created:
+        return "text-info";
+      case ToDoStatus.started:
+        return "text-primary";
+      case ToDoStatus.paused:
+        return "text-secondary";
+      case ToDoStatus.cancelled:
+        return "text-warning";
+      case ToDoStatus.finished:
+        return "text-success";
+      default:
+        throw new Error(`unknown todo status: ${p.status}`);
+    }
   }
 
   editToDo(p: ToDo) {
@@ -105,7 +148,7 @@ export class ToDoComponent {
   }
 
   cancel() {
-    this.todo = { id: null, text: "", priority: 1, deadline: null, assignedTo: null, tags: [] };
+    this.todo = { id: null, text: "", priority: 1, deadline: null, assignedTo: null, tags: [], status: ToDoStatus.created };
     this.tableMode = true;
     this.tags = [];
   }

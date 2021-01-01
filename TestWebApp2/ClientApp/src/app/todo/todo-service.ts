@@ -13,22 +13,22 @@ export class ToDoService {
     return this.http.get(this.url);
   }
 
-  getToDo(id: number) {
+  getToDo(id: string) {
     return this.http.get(this.url + '/' + id);
   }
 
-  createToDo(todo: ToDo) {
+  createToDo(todo: EditToDo) {
     if (todo.tags != null && todo.tags.length === 0) {
       todo.tags = null;
     }
     return this.http.post(`${this.url}`, todo);
   }
 
-  updateToDo(todo: ToDo) {
+  updateToDo(id: string, todo: EditToDo) {
     if (todo.tags != null && todo.tags.length === 0) {
       todo.tags = null;
     }
-    return this.http.put(`${this.url}/${todo.id}`, todo);
+    return this.http.put(`${this.url}/${id}`, todo);
   }
 
   deleteToDo(id: string) {

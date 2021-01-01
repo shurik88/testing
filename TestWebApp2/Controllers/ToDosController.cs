@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using TestWebApp2.Contracts;
+using TestWebApp2.Exceptions;
 using TestWebApp2.Model;
 
 namespace TestWebApp2.Controllers
@@ -65,10 +66,13 @@ namespace TestWebApp2.Controllers
         /// <response code="200">Дело добавлено</response>
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         [HttpPost]
-        public IActionResult PostAdd([FromBody] ToDoDto item)
+        public IActionResult PostAdd([FromBody] EditToDoDto item)
         {
-            item.Id = Guid.NewGuid();
-            _todos.InsertOne(Map(item));
+            var todo = Map(item);
+            todo.Id = Guid.NewGuid();
+            todo.Status = ToDoStatus.Created;
+
+            _todos.InsertOne(todo);
 
             return Ok(item);
         }
@@ -100,18 +104,19 @@ namespace TestWebApp2.Controllers
                 Text = item.Text,
                 AssignedTo = item.AssignedTo != null ? new AssignerDto { Email = item.AssignedTo.Email, Name = item.AssignedTo.Name } : null,
                 Deadline = item.Deadline,
-                Tags = item.Tags
+                Tags = item.Tags,
+                Status = item.Status
             };
 
-        private static ToDo Map(ToDoDto item) =>
+        private static ToDo Map(EditToDoDto item) =>
             new ToDo
             {
-                Id = item.Id != null ? item.Id.Value : Guid.NewGuid(),
                 Priority = item.Priority,
                 Text = item.Text,
                 AssignedTo = item.AssignedTo != null ? new Assigner { Email = item.AssignedTo.Email, Name = item.AssignedTo.Name } : null,
                 Deadline = item.Deadline,
-                Tags = item.Tags
+                Tags = item.Tags,
+                Status = ToDoStatus.Created
             };
 
         /// <summary>
@@ -121,14 +126,20 @@ namespace TestWebApp2.Controllers
         /// <param name="item">Дело</param>
         /// <returns>Измененное дело</returns>
         /// <response code="400">Некорректные данные</response>
+        /// <response code="409">Конфликт сохранения</response>
         /// <response code="200">Текущее дело изменено</response>
         /// <response code="201">Дело с идентификатором не было найдено, поэтому было создано новое дело</response> 
         [HttpPut("{id}")]
         [ProducesResponseType(400)]
+        [ProducesResponseType(409, Type = typeof(string))]
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         [ProducesResponseType(201, Type = typeof(ToDoDto))]
-        public IActionResult PutEdit(Guid id, [FromBody] ToDoDto item)
+        public IActionResult PutEdit(Guid id, [FromBody] EditToDoDto item)
         {
+            var currentItem = _todos.AsQueryable().FirstOrDefault(x => x.Id == id);
+            if (currentItem != null && currentItem.Status != ToDoStatus.Created)
+                throw new ValidationErrorException($"Impossible to edit todo item. Current status is :{currentItem.Status}.");
+
             var itemToReplaced = Map(item);
             itemToReplaced.Id = id;
             var replacedItem = _todos.FindOneAndReplace(x => x.Id == id, itemToReplaced);
@@ -138,6 +149,23 @@ namespace TestWebApp2.Controllers
             _todos.InsertOne(itemToReplaced);
 
             return StatusCode(201, item);
+        }
+
+        /// <summary>
+        ///     Получение списка действий(событий) дел.
+        /// </summary>
+        /// <param name="id">Идентификатор дела</param>
+        /// <returns>Список действий</returns>
+        [HttpGet("{id}/actions")]
+        [ProducesResponseType(404, Type = typeof(string))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ToDoActionDto>))]
+        public IActionResult GetActions(Guid id)
+        {
+            var currentItem = _todos.AsQueryable().FirstOrDefault(x => x.Id == id);
+            if (currentItem == null)
+                return NotFound(id);
+
+            return Ok(currentItem.Log != null ? currentItem.Log.Select(x => new ToDoActionDto { Action = x.Action, Date = x.Date }) : new List<ToDoActionDto>());
         }
     }
 }

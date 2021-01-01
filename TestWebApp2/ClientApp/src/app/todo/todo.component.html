@@ -11,6 +11,7 @@
       <td>Исполнитель</td>
       <td>Дедлайн</td>
       <td>Теги</td>
+      <td>Статус</td>
       <td></td>
     </tr>
   </thead>
@@ -23,7 +24,11 @@
         <td>{{p.deadline != null ? moment(p.deadline).format('LL') : ''}}</td>
         <td>{{p.tags != null ? p.tags.join(',') : ''}}</td>
         <td>
-          <button class="btn btn-sm btn-primary ml-3" (click)="editToDo(p)">Изменить</button>
+          <p [class]="getStatusClassName(p)">{{getStatusName(p)}}</p>
+          
+        </td>
+        <td>
+          <button class="btn btn-sm btn-primary ml-3" (click)="editToDo(p)" [disabled]="p.status!==0">Изменить</button>
           <button class="btn btn-sm btn-danger ml-3" (click)="delete(p)">Удалить</button>
         </td>
       </ng-template>

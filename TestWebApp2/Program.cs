@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace TestWebApp2
 {
@@ -15,6 +16,11 @@ namespace TestWebApp2
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .UseSerilog((hosting, config) =>
+                {
+                    config.ReadFrom.Configuration(hosting.Configuration);
                 });
+                //.ConfigureLogging(logBuilder;
     }
 }

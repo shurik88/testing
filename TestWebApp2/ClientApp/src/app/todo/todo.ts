@@ -1,8 +1,4 @@
-interface ToDo {
+interface ToDo extends EditToDo {
   id: string;
-  text: string;
-  priority: number;
-  tags: string[];
-  deadline: string;
-  assignedTo: Assigner;
+  status: number;
 }

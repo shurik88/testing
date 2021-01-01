@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option csharp_namespace = "TestWebApp2.gServices";
+
+//сервис выполнения задания.
+service ToDoExecution{
+	//начать выполнять задание
+	rpc Start (StartToDoRequest) returns (StartToDoReply);
+
+	//остановить выполнять задание
+	rpc Pause (PauseToDoRequest) returns (PauseToDoReply);
+
+	//продолжить выполнять задание
+	rpc Resume (ResumeToDoRequest) returns (ResumeToDoReply);
+
+	//отменить выполнять задание
+	rpc Cancel (CancelToDoRequest) returns (CancelToDoReply);
+
+	//завершить выполнять задание
+	rpc Finish (FinishToDoRequest) returns (FinishToDoReply);
+}
+
+message StartToDoRequest{
+	string id = 1;//идентификатор задания
+}
+
+message StartToDoReply{
+}
+
+message PauseToDoRequest{
+	string id = 1;//идентификатор задания
+}
+
+message PauseToDoReply{
+}
+
+message ResumeToDoRequest{
+	string id = 1;//идентификатор задания
+}
+
+message ResumeToDoReply{
+}
+
+message CancelToDoRequest{
+	string id = 1;//идентификатор задания
+	string reason = 2;
+}
+
+message CancelToDoReply{
+}
+
+message FinishToDoRequest{
+	string id = 1;//идентификатор задания
+}
+
+message FinishToDoReply{
+	int32 totalDuration = 1; //итоговая длительность выполнения задания
+}
