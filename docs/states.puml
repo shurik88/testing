@@ -3,7 +3,7 @@
 Started -up-> Paused: Pause
 Paused -> Started: Resume
 Started -down->Cancelled: Cancel
-Started -> Finished: Finished
+Started -> Finished: Finish
 Finished -down-> [*]
 Cancelled -> [*] 
 @enduml

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using TestWebApp2.Filters;
@@ -101,10 +102,12 @@ namespace TestWebApp2
 
                 endpoints.MapGrpcService<ToDoExecutionService>();
 
-                if (env.IsDevelopment())
-                {
-                    endpoints.MapGrpcReflectionService();
-                }
+                endpoints.MapGrpcReflectionService();
+
+                //if (env.IsDevelopment())
+                //{
+                //    endpoints.MapGrpcReflectionService();
+                //}
             });
 
             app.UseSpa(spa =>
