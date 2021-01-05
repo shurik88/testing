@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
+using TestWebApp2.Converters;
 using TestWebApp2.Filters;
 using TestWebApp2.gServices;
 using TestWebApp2.Interceptors;
@@ -33,7 +33,12 @@ namespace TestWebApp2
                 .AddMvcOptions(options =>
                 {
                     options.Filters.Add(typeof(ApiExceptionFilterAttribute));
+                })
+                .AddJsonOptions(x =>
+                {
+                    x.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
                 });
+
 
 
             var mongoUrl = new MongoUrl(Configuration.GetValue<string>("mongo:connectionString"));
