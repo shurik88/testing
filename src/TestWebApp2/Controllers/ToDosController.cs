@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using TestWebApp2.Contracts;
+using TestWebApp2.DataAccess;
 using TestWebApp2.Exceptions;
+using TestWebApp2.Filters;
 using TestWebApp2.Model;
 
 namespace TestWebApp2.Controllers
@@ -17,12 +20,14 @@ namespace TestWebApp2.Controllers
     [Route("api/[controller]")]
     public class ToDosController: ControllerBase
     {
-        private readonly IMongoDatabase _db;
-        private readonly IMongoCollection<ToDo> _todos;
-        public ToDosController(IMongoDatabase database)
+        //private readonly IMongoDatabase _db;
+        //private readonly IMongoCollection<ToDo> _todos;
+        private readonly IRepository<ToDo, Guid> _todos;
+        public ToDosController(IRepository<ToDo, Guid> todos)
         {
-            _db = database ?? throw new ArgumentNullException(nameof(database));
-            _todos = _db.GetCollection<ToDo>("todos");
+            //_db = database ?? throw new ArgumentNullException(nameof(database));
+            //_todos = _db.GetCollection<ToDo>("todos");
+            _todos = todos ?? throw new ArgumentNullException(nameof(todos));
         }
 
         /// <summary>
@@ -33,7 +38,7 @@ namespace TestWebApp2.Controllers
         public IEnumerable<ToDoDto> Get()
         {
             return _todos
-                .AsQueryable()
+                .Entities
                 .ToList()
                 .Select(MapReverse);
         }
@@ -50,7 +55,7 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         public IActionResult GetById(Guid id)
         {
-            var todo = _todos.AsQueryable().FirstOrDefault(x => x.Id == id);
+            var todo = _todos.Entities.FirstOrDefault(x => x.Id == id);
             if (todo == null)
                 return NotFound(id);
 
@@ -66,13 +71,14 @@ namespace TestWebApp2.Controllers
         /// <response code="200">Дело добавлено</response>
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         [HttpPost]
-        public IActionResult PostAdd([FromBody] EditToDoDto item)
+        //[ValidateModel]
+        public async Task<IActionResult> PostAddAsync([FromBody] EditToDoDto item)
         {
             var todo = Map(item);
             todo.Id = Guid.NewGuid();
             todo.Status = ToDoStatus.Created;
 
-            _todos.InsertOne(todo);
+            await _todos.AddAsync(todo);
 
             return Ok(item);
         }
@@ -87,11 +93,11 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(404, Type = typeof(Guid))]
         [ProducesResponseType(204)]
         [HttpDelete("{id:Guid}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
 
-            var deleted = _todos.FindOneAndDelete(x => x.Id == id);
-            if (deleted == null)
+            var isDeleted = await _todos.DeleteOneAsync(x => x.Id == id);
+            if (!isDeleted)
                 return NotFound(id);
 
             return NoContent();
@@ -134,19 +140,19 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(409, Type = typeof(string))]
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
         [ProducesResponseType(201, Type = typeof(ToDoDto))]
-        public IActionResult PutEdit(Guid id, [FromBody] EditToDoDto item)
+        public async Task<IActionResult> PutEditAsync(Guid id, [FromBody] EditToDoDto item)
         {
-            var currentItem = _todos.AsQueryable().FirstOrDefault(x => x.Id == id);
+            var currentItem = _todos.Entities.FirstOrDefault(x => x.Id == id);
             if (currentItem != null && currentItem.Status != ToDoStatus.Created)
                 throw new ValidationErrorException($"Impossible to edit todo item. Current status is :{currentItem.Status}.");
 
             var itemToReplaced = Map(item);
             itemToReplaced.Id = id;
-            var replacedItem = _todos.FindOneAndReplace(x => x.Id == id, itemToReplaced);
-            if (replacedItem != null)
+            var isItemReplaced = await _todos.SaveAsync(itemToReplaced);
+            if (isItemReplaced)
                 return Ok(item);
 
-            _todos.InsertOne(itemToReplaced);
+            await _todos.AddAsync(itemToReplaced);
 
             return StatusCode(201, item);
         }
@@ -161,7 +167,7 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<ToDoActionDto>))]
         public IActionResult GetActions(Guid id)
         {
-            var currentItem = _todos.AsQueryable().FirstOrDefault(x => x.Id == id);
+            var currentItem = _todos.Entities.FirstOrDefault(x => x.Id == id);
             if (currentItem == null)
                 return NotFound(id);
 

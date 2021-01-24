@@ -10,15 +10,15 @@ namespace TestWebApp2.Contracts
         /// <summary>
         /// ФИО
         /// </summary>
-        [Required]
-        [MaxLength(50)]
+        //[Required]
+        //[MaxLength(50)]
         public string Name { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
-        [Required]
-        [EmailAddress]
+        //[Required]
+        //[EmailAddress]
         public string Email { get; set; }
     }
 }

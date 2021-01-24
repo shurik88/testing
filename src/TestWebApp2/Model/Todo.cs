@@ -3,13 +3,14 @@ using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 using TestWebApp2.Contracts;
+using TestWebApp2.DataAccess.Mongo;
 
 namespace TestWebApp2.Model
 {
-    public class ToDo
+    public class ToDo: MongoEntityKey<Guid>
     {
-        [BsonId(IdGenerator = typeof(GuidGenerator))]
-        public Guid Id { get; set; }
+        //[BsonId(IdGenerator = typeof(GuidGenerator))]
+        //public new Guid Id { get; set; }
 
         public string Text { get; set; }
 

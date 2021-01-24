@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -5,13 +6,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using TestWebApp2.Converters;
+using TestWebApp2.DataAccess;
+using TestWebApp2.DataAccess.Mongo;
 using TestWebApp2.Filters;
 using TestWebApp2.gServices;
 using TestWebApp2.Interceptors;
+using TestWebApp2.Model;
+using TestWebApp2.Validators;
 
 namespace TestWebApp2
 {
@@ -37,6 +44,11 @@ namespace TestWebApp2
                 .AddJsonOptions(x =>
                 {
                     x.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                })
+                .AddFluentValidation(fv => {
+                    fv.LocalizationEnabled = false;
+                    fv.RegisterValidatorsFromAssemblyContaining<AssignerDtoValidator>();
+                    fv.RegisterValidatorsFromAssemblyContaining<EditTodoValidator>();
                 });
 
 
@@ -45,8 +57,11 @@ namespace TestWebApp2
             var database = mongoUrl.DatabaseName;
             var mongoClient = new MongoClient(mongoUrl);
 
-            services.AddSingleton(mongoClient);
-            services.AddSingleton(mongoClient.GetDatabase(database));
+            services
+                .AddSingleton(mongoClient)
+                .AddSingleton(mongoClient.GetDatabase(database))
+                .AddTransient<IQueryable<ToDo>, MongoQueryable<ToDo>>(x => new MongoQueryable<ToDo>(x.GetRequiredService<IMongoDatabase>(), "todos"))
+                .AddTransient<IRepository<ToDo, Guid>, MongoRepository<ToDo, Guid>>(x => new MongoRepository<ToDo, Guid>(x.GetRequiredService<IMongoDatabase>(), "todos"));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -59,6 +74,7 @@ namespace TestWebApp2
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+                c.AddFluentValidationRules();
             });
 
             services.AddGrpc(options =>

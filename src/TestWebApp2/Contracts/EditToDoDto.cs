@@ -11,15 +11,15 @@ namespace TestWebApp2.Contracts
         /// <summary>
         /// Текст
         /// </summary>
-        [Required]
-        [MaxLength(50)]
+        //[Required]
+        //[MaxLength(50)]
         public string Text { get; set; }
 
         /// <summary>
         /// Важность
         /// </summary>
-        [Required]
-        [Range(1, 10)]
+        //[Required]
+        //[Range(1, 10)]
         public int Priority { get; set; }
 
         /// <summary>
@@ -31,8 +31,8 @@ namespace TestWebApp2.Contracts
         /// <summary>
         /// Теги
         /// </summary>
-        [MaxLength(3, ErrorMessage = "Max tags count of 3 exceeded")]
-        [MinLength(1, ErrorMessage = "Required at least 1 item")]
+        //[MaxLength(3, ErrorMessage = "Max tags count of 3 exceeded")]
+        //[MinLength(1, ErrorMessage = "Required at least 1 item")]
         public string[] Tags { get; set; }
 
         /// <summary>
