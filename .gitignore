@@ -229,3 +229,6 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 /TestWebApp2/Properties/launchSettings.json
+*.js.map
+/src/TestWebApp2/ClientApp/src/app/todo/editToDoVaidator.js
+/src/TestWebApp2/ClientApp/src/app/todo/assignerValidator.js

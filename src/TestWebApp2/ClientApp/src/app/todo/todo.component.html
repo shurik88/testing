@@ -1,8 +1,8 @@
 <h1 id="tableLabel">To-Do list</h1>
 
 <p>This component demonstrates fetching data from the server and pushing data to server.</p>
-<h1>ToDo list</h1>
-<input type="button" value="Добавить" class="btn btn-primary mb-3" (click)="add()" />
+<h1>{{(tableMode ? "ToDo list" : "Adding todo" )}}</h1>
+<input type="button" value="Добавить" *ngIf="tableMode" class="btn btn-primary mb-3" (click)="add()" />
 <table *ngIf="tableMode; else create" class="table table-striped">
   <thead>
     <tr>
@@ -66,6 +66,7 @@
                     [maxTags]="3"
                     [(ngModel)]="tags" name="tags"></ngx-tags-input>
   </td>
+  <td></td>
   <td>
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-sm btn-success ml-3" />
     <input type="button" value="Отмена" (click)="cancel()" class="btn btn-sm btn-warning ml-3" />
@@ -101,11 +102,17 @@
     <label>Теги. Для добавления нажмите Enter</label>
     <ngx-tags-input class="form-control input-lg"
                     [removeLastOnBackspace]="removeLastOnBackspace"
-                    [maxTags] ="3"
+                    [maxTags]="3"
                     [(ngModel)]="tags" name="tags"></ngx-tags-input>
   </div>
   <div>
     <input type="button" value="Сохранить" (click)="save()" class="btn btn-success ml-3" />
     <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning ml-3" />
   </div>
+  <div class="mt-2" *ngIf="validationResult && validationResult.isInvalid()">
+    <div class="alert alert-danger" role="alert" *ngFor="let error of validationResult.getFailureMessages()">
+      {{error}}
+    </div>
+  </div>
+  
 </ng-template>

@@ -4,6 +4,8 @@ import * as moment from 'moment';
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 import { ToDoStatus } from './todoStatus';
+import { EditToDoValidator } from './editToDoVaidator';
+import { ValidationResult } from 'fluent-ts-validator';
 //import { } from './todoStatus';
 //import { DatePickerComponent } from 'ng2-date-picker';
 
@@ -56,6 +58,10 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   providers: [ToDoService, { provide: NgbDateAdapter, useClass: CustomAdapter }]
 })
 export class ToDoComponent {
+
+  validator = new EditToDoValidator();
+  public validationResult: ValidationResult;
+
   todo: ToDo = { id: null, text: "", priority: 1, deadline: null, assignedTo: null, tags: [], status: ToDoStatus.created };
   todos: ToDo[];              
   tableMode = true;          // табличный режим
@@ -81,10 +87,15 @@ export class ToDoComponent {
     this.service.getToDos()
       .subscribe((data: ToDo[]) => this.todos = data);
   }
+
   // сохранение данных
   save() {
-    if (this.tags.length > 0) {
-      this.todo.tags = this.tags.map(x => x.displayValue);
+    this.todo.tags = this.tags.length > 0 ? this.tags.map(x => x.displayValue) : null;
+
+    this.validationResult = this.validator.validate(this.todo);
+    if (this.validationResult.isInvalid()) {
+      console.log(this.validationResult.getFailureMessages());
+      return;
     }
     //this.todo
     if (this.todo.id === null) {

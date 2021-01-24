@@ -46,7 +46,9 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\todo\assigner.ts" />
+    <None Remove="ClientApp\src\app\todo\assignerValidator.ts" />
     <None Remove="ClientApp\src\app\todo\editTodo.ts" />
+    <None Remove="ClientApp\src\app\todo\editToDoVaidator.ts" />
     <None Remove="ClientApp\src\app\todo\todo-service.ts" />
     <None Remove="ClientApp\src\app\todo\todo.component.ts" />
     <None Remove="ClientApp\src\app\todo\todo.ts" />
@@ -55,7 +57,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\todo\assigner.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\todo\assignerValidator.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\editTodo.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\todo\editToDoVaidator.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo.ts" />
