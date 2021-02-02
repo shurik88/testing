@@ -22,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
     <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.34.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.34.0" />
     <PackageReference Include="Grpc.Tools" Version="2.34.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -67,6 +68,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\generated\" />
     <Folder Include="DataAccess\Mongo\" />
     <Folder Include="RequestResults\" />
   </ItemGroup>

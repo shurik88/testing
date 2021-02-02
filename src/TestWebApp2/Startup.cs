@@ -1,6 +1,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ using TestWebApp2.DataAccess;
 using TestWebApp2.DataAccess.Mongo;
 using TestWebApp2.Filters;
 using TestWebApp2.gServices;
+using TestWebApp2.Infrastructure.Features;
 using TestWebApp2.Interceptors;
 using TestWebApp2.Model;
 using TestWebApp2.Validators;
@@ -114,6 +116,18 @@ namespace TestWebApp2
             });
 
             app.UseRouting();
+
+            app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
+            //// Add after existing UseGrpcWeb
+            app.Use((c, next) =>
+            {
+                if (c.Request.ContentType == "application/grpc")
+                {
+                    var current = c.Features.Get<IHttpResponseFeature>();
+                    c.Features.Set<IHttpResponseFeature>(new HttpSysWorkaroundHttpResponseFeature(current));
+                }
+                return next();
+            });
 
             app.UseEndpoints(endpoints =>
             {

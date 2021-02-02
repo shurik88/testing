@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 import { ToDoStatus } from './todoStatus';
 import { EditToDoValidator } from './editToDoVaidator';
 import { ValidationResult } from 'fluent-ts-validator';
+import { ToDoExecution } from "../generated/todoExecution_pb_service";
+import { StartToDoRequest, StartToDoReply } from "../generated/todoExecution_pb";
+import { grpc } from "@improbable-eng/grpc-web";
 //import { } from './todoStatus';
 //import { DatePickerComponent } from 'ng2-date-picker';
 
@@ -167,6 +170,27 @@ export class ToDoComponent {
   delete(p: ToDo) {
     this.service.deleteToDo(p.id)
       .subscribe(() => this.loadToDos());
+  }
+
+  startToDo(p: ToDo) {
+    const input = new StartToDoRequest();
+    input.setId(p.id);
+    grpc.unary(ToDoExecution.Start, {
+      request: input,
+      host: "https://localhost:5001", //https://grpcwebdemo.azurewebsites.net (Windows App Service)
+      onEnd: res => {
+        const { status, message } = res;
+        if (status === grpc.Code.OK && message) {
+          var result = message.toObject() as StartToDoReply.AsObject;
+          console.log("success grpc!!!");
+          //this.countries = result.countriesList.map(country =>
+          //  <CountryModel>({
+          //    name: country.name,
+          //    description: country.description
+          //  }));
+        }
+      }
+    });
   }
 
   add() {

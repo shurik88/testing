@@ -28,6 +28,7 @@
           
         </td>
         <td>
+          <button class="btn btn-sm btn-primary ml-3" (click)="startToDo(p)" [disabled]="p.status!==0">Начать</button>
           <button class="btn btn-sm btn-primary ml-3" (click)="editToDo(p)" [disabled]="p.status!==0">Изменить</button>
           <button class="btn btn-sm btn-danger ml-3" (click)="delete(p)">Удалить</button>
         </td>

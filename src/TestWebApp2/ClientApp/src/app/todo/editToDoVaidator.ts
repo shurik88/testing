@@ -1,7 +1,6 @@
 import { AbstractValidator } from "fluent-ts-validator";
 import { AssignerValidator } from "./assignerValidator";
 
-
 export class EditToDoValidator extends AbstractValidator<EditToDo>{
   constructor() {
     super();
