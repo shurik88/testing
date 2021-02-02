@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using System;
 using System.IO;
 using System.Reflection;
+using TestWebApp2.Converters;
 
 namespace TestWebApp2
 {
@@ -25,7 +26,11 @@ namespace TestWebApp2
         {
             services.AddControllersWithViews()
                 .AddXmlSerializerFormatters()
-                .AddXmlDataContractSerializerFormatters();
+                .AddXmlDataContractSerializerFormatters()
+                 .AddJsonOptions(x =>
+                 {
+                     x.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                 });
 
             var mongoUrl = new MongoUrl(Configuration.GetValue<string>("mongo:connectionString"));
             var database = mongoUrl.DatabaseName;
