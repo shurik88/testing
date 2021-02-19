@@ -1,0 +1,30 @@
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+const jsonData = pm.response.json();
+console.log("jsonData=jsonData[0]", jsonData[0]) \\\тут выводим первый элемент массива
+
+var jsonSubj = jsonData[0].subject;
+console.log("1", jsonSubj)         \\\тут мы выводим значение поля subject для первого объекта массива: [0]
+
+
+
+if(jsonData.testTimeLimit = 5)
+{console.log("короткий тест");}
+else
+{console.log("длинный тест");} \\\ если testTimeLimit = 5, вывести строку "короткий тест" , иначе вывести строку "длинный тест"
+
+
+var quantity = jsonData.length;
+console.log("quantity ", quantity ); \\\ выводим количество элементов массива
+
+
+for(var i=0; i<quantity; i++){
+    var id=jsonData[i].id;
+};
+console.log(id); \\\ выводим значение поля id последнего элемента через цикл
+
+
+var jsonSubj2 = jsonData[quantity-1].subject;
+console.log("quantity-1", jsonSubj2);   \\\выводим значение поля Предмет последнего элемента через переменную quantity которая выводит количество элементов. Последнее - это quantity-1
