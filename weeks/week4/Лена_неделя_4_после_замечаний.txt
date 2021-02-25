@@ -1,0 +1,30 @@
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+const jsonData = pm.response.json();
+console.log("jsonData=jsonData[0]", jsonData[0]);
+
+var jsonSubj = jsonData[0].subject;
+console.log("1", jsonSubj);
+
+var quantity = jsonData.length;
+console.log("quantity ", quantity );
+
+for(var i=0; i<quantity; i++){
+    var id=jsonData[i].id;
+};
+console.log(id);
+
+var jsonSubj2 = jsonData[quantity-1].subject;
+console.log("quantity-1", jsonSubj2);
+
+var TTL = jsonData[quantity-1].testTimeLimit;
+console.log("quantity-1", TTL);
+
+if(TTL == 5){
+    console.log("короткий тест");
+}
+else{
+    console.log("длинный тест");
+}
