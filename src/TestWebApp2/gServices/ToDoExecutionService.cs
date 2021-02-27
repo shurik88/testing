@@ -3,10 +3,11 @@ using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
 using TestWebApp2.Model;
-using System.Linq;
 using MongoDB.Driver.Linq;
 using TestWebApp2.Domain;
 using TestWebApp2.Domain.Actions;
+using TestWebApp2.DataAccess;
+using TestWebApp2.DataAccess.Mongo.Extensions;
 
 namespace TestWebApp2.gServices
 {
@@ -15,13 +16,11 @@ namespace TestWebApp2.gServices
     /// </summary>
     public class ToDoExecutionService: ToDoExecution.ToDoExecutionBase
     {
-        private readonly IMongoDatabase _db;
-        private readonly IMongoCollection<ToDo> _todos;
+        private readonly IRepository<ToDo, Guid> _todos;
 
-        public ToDoExecutionService(IMongoDatabase database)
+        public ToDoExecutionService(IRepository<ToDo, Guid> todos)
         {
-            _db = database ?? throw new ArgumentNullException(nameof(database));
-            _todos = _db.GetCollection<ToDo>("todos");
+            _todos = todos ?? throw new ArgumentNullException(nameof(todos));
         }
 
         private async Task<ToDo> GetToDoByIdAsync(string id)
@@ -29,63 +28,53 @@ namespace TestWebApp2.gServices
             if (!Guid.TryParse(id, out Guid entityId))
                 throw new RpcException(new Status(StatusCode.InvalidArgument, $"invalid guid for: {id}"));
 
-            return await _todos.AsQueryable().FirstOrDefaultAsync(x => x.Id == entityId) 
+            return await _todos.Entities.FirstOrDefaultAsync(x => x.Id == entityId) 
                 ?? throw new RpcException(new Status(StatusCode.NotFound, $"todo with id:{id} not found"));
         }
 
         public override async Task<StartToDoReply> Start(StartToDoRequest request, ServerCallContext context)
         {
-            var todo = await GetToDoByIdAsync(request.Id);
-            var wf = new ToDoExecutionWorkflow();
-            wf.Init(todo);
-            wf.DoAction(new StartActionOnToDo());
-            await _todos.ReplaceOneAsync(x => x.Id == todo.Id, todo);
+            await ExecuteActionAsync(request.Id, new StartActionOnToDo());
 
             return new StartToDoReply();
         }
 
         public override async Task<PauseToDoReply> Pause(PauseToDoRequest request, ServerCallContext context)
         {
-            var todo = await GetToDoByIdAsync(request.Id);
-            var wf = new ToDoExecutionWorkflow();
-            wf.Init(todo);
-            wf.DoAction(new PauseActionOnToDo());
-            await _todos.ReplaceOneAsync(x => x.Id == todo.Id, todo);
+            await ExecuteActionAsync(request.Id, new PauseActionOnToDo());
 
             return new PauseToDoReply();
         }
 
         public override async Task<ResumeToDoReply> Resume(ResumeToDoRequest request, ServerCallContext context)
         {
-            var todo = await GetToDoByIdAsync(request.Id);
-            var wf = new ToDoExecutionWorkflow();
-            wf.Init(todo);
-            wf.DoAction(new ResumeActionOnToDo());
-            await _todos.ReplaceOneAsync(x => x.Id == todo.Id, todo);
+            await ExecuteActionAsync(request.Id, new ResumeActionOnToDo());
 
             return new ResumeToDoReply();
         }
 
         public override async Task<CancelToDoReply> Cancel(CancelToDoRequest request, ServerCallContext context)
         {
-            var todo = await GetToDoByIdAsync(request.Id);
-            var wf = new ToDoExecutionWorkflow();
-            wf.Init(todo);
-            wf.DoAction(new CancelActionOnToDo(request.Reason));
-            await _todos.ReplaceOneAsync(x => x.Id == todo.Id, todo);
+            await ExecuteActionAsync(request.Id, new CancelActionOnToDo(request.Reason));
 
             return new CancelToDoReply();
         }
 
         public override async Task<FinishToDoReply> Finish(FinishToDoRequest request, ServerCallContext context)
         {
-            var todo = await GetToDoByIdAsync(request.Id);
-            var wf = new ToDoExecutionWorkflow();
-            wf.Init(todo);
-            wf.DoAction(new FinishActionOnToDo());
-            await _todos.ReplaceOneAsync(x => x.Id == todo.Id, todo);
+            var todo = await ExecuteActionAsync(request.Id, new FinishActionOnToDo());
 
             return new FinishToDoReply { TotalDuration = todo.FactDuration.Value };
+        }
+
+        private async Task<ToDo> ExecuteActionAsync(string todoId, ActionOnToDo action)
+        {
+            var todo = await GetToDoByIdAsync(todoId);
+            var wf = new ToDoExecutionWorkflow();
+            wf.Init(todo);
+            wf.DoAction(action);
+            await _todos.SaveAsync(todo);
+            return todo;
         }
     }
 }

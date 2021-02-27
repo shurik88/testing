@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using TestWebApp2.Contracts;
 using TestWebApp2.DataAccess;
+using TestWebApp2.DataAccess.Mongo.Extensions;
 using TestWebApp2.Exceptions;
 using TestWebApp2.Filters;
 using TestWebApp2.Model;
@@ -20,13 +21,9 @@ namespace TestWebApp2.Controllers
     [Route("api/[controller]")]
     public class ToDosController: ControllerBase
     {
-        //private readonly IMongoDatabase _db;
-        //private readonly IMongoCollection<ToDo> _todos;
         private readonly IRepository<ToDo, Guid> _todos;
         public ToDosController(IRepository<ToDo, Guid> todos)
         {
-            //_db = database ?? throw new ArgumentNullException(nameof(database));
-            //_todos = _db.GetCollection<ToDo>("todos");
             _todos = todos ?? throw new ArgumentNullException(nameof(todos));
         }
 
@@ -35,7 +32,7 @@ namespace TestWebApp2.Controllers
         /// </summary>
         /// <returns>Дела</returns>
         [HttpGet]
-        public IEnumerable<ToDoDto> Get()
+        public async Task<IEnumerable<ToDoDto>> GetAsync()
         {
             return _todos
                 .Entities
@@ -53,9 +50,9 @@ namespace TestWebApp2.Controllers
         [Produces(typeof(ToDoDto))]
         [ProducesResponseType(404, Type = typeof(Guid))]
         [ProducesResponseType(200, Type = typeof(ToDoDto))]
-        public IActionResult GetById(Guid id)
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var todo = _todos.Entities.FirstOrDefault(x => x.Id == id);
+            var todo = await _todos.Entities.FirstOrDefaultAsync(x => x.Id == id);
             if (todo == null)
                 return NotFound(id);
 
@@ -142,7 +139,7 @@ namespace TestWebApp2.Controllers
         [ProducesResponseType(201, Type = typeof(ToDoDto))]
         public async Task<IActionResult> PutEditAsync(Guid id, [FromBody] EditToDoDto item)
         {
-            var currentItem = _todos.Entities.FirstOrDefault(x => x.Id == id);
+            var currentItem = await _todos.Entities.FirstOrDefaultAsync(x => x.Id == id);
             if (currentItem != null && currentItem.Status != ToDoStatus.Created)
                 throw new ValidationErrorException($"Impossible to edit todo item. Current status is :{currentItem.Status}.");
 
@@ -165,9 +162,9 @@ namespace TestWebApp2.Controllers
         [HttpGet("{id}/actions")]
         [ProducesResponseType(404, Type = typeof(string))]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ToDoActionDto>))]
-        public IActionResult GetActions(Guid id)
+        public async Task<IActionResult> GetActionsAsync(Guid id)
         {
-            var currentItem = _todos.Entities.FirstOrDefault(x => x.Id == id);
+            var currentItem = await _todos.Entities.FirstOrDefaultAsync(x => x.Id == id);
             if (currentItem == null)
                 return NotFound(id);
 

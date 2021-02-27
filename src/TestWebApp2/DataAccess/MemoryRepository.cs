@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using TestWebApp2.DataAccess.Extensions;
 
 namespace TestWebApp2.DataAccess
 {
@@ -16,7 +17,7 @@ namespace TestWebApp2.DataAccess
         where TEntity: class, IEntity<TKey>
     {
         /// <inheritdoc/>
-        public IQueryable<TEntity> Entities => _data.AsQueryable();
+        public IQueryable<TEntity> Entities => _data.Select(x => x.Copy()).AsQueryable();
         
         // /// <inheritdoc/>
         //public Type ElementType => _data.AsQueryable().ElementType;
