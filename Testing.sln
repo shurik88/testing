@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApp2", "TestWebApp2\TestWebApp2.csproj", "{B1771CEE-14E2-4AB7-9846-E3605FD4D5D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApp2", "src\TestWebApp2\TestWebApp2.csproj", "{B1771CEE-14E2-4AB7-9846-E3605FD4D5D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4012CF09-8457-4941-99DB-4EAC5052C0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1771CEE-14E2-4AB7-9846-E3605FD4D5D9} = {4012CF09-8457-4941-99DB-4EAC5052C0DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {81EE08CC-7E13-4DF6-9BFE-4C2879F2753D}
