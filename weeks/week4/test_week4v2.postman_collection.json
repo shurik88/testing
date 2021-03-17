@@ -129,6 +129,79 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "AddToDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var envNewDoId;\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"envNewDoId = jsonData.id;\r",
+							"\r",
+							"pm.environment.set(\"envNewDoId\", envNewDoId);\r",
+							"console.log('envNewDoId =', envNewDoId)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var text = \"text6643\";\r",
+							"pm.environment.set(\"text\", text);\r",
+							"var priority = \"4\";\r",
+							"pm.environment.set(\"priority\", priority);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa9\",\r\n  \"text\": {{text}},\r\n  \"priority\": {{priority}}},\r\n  \"deadline\": \"2021-03-18T09:15:08.751Z\",\r\n  \"tags\": [\r\n    \"string\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string3\",\r\n    \"email\": \"user3@example.com\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/ToDos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ToDos"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "15",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
