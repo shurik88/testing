@@ -144,12 +144,10 @@
 							"var envNewDoId;\r",
 							"\r",
 							"var jsonData = pm.response.json();\r",
-							"envNewDoId = jsonData.id;\r",
+							"var id = jsonData.id;\r",
 							"\r",
-							"pm.environment.set(\"envNewDoId\", envNewDoId);\r",
-							"console.log('envNewDoId =', envNewDoId)\r",
-							"\r",
-							""
+							"pm.environment.set(\"id\", id);\r",
+							"console.log('id =', id)"
 						],
 						"type": "text/javascript"
 					}
@@ -158,10 +156,30 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"var text = \"text6643\";\r",
+							"\r",
+							"var id = \"55baa5b5-5bef-5e5e-b555-555e455ae455\";\r",
+							"pm.environment.set(\"id\", id);\r",
+							"\r",
+							"var text = \"text55449\";\r",
 							"pm.environment.set(\"text\", text);\r",
-							"var priority = \"4\";\r",
+							"\r",
+							"var priority = \"7\";\r",
 							"pm.environment.set(\"priority\", priority);\r",
+							"\r",
+							"var deadline = \"2021-03-12T07:15:26\";\r",
+							"pm.environment.set(\"deadline\", deadline);\r",
+							"\r",
+							"var tags = [\"bad wolf\", \"well done\", \"exterminate\"];\r",
+							"pm.environment.set(\"tags\", tags);\r",
+							"\r",
+							"var name = \"Alex421\";\r",
+							"pm.environment.set(\"name\", name);\r",
+							"\r",
+							"var email = \"random125@void.net\";\r",
+							"pm.environment.set(\"email\", email);\r",
+							"\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -179,7 +197,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa9\",\r\n  \"text\": {{text}},\r\n  \"priority\": {{priority}}},\r\n  \"deadline\": \"2021-03-18T09:15:08.751Z\",\r\n  \"tags\": [\r\n    \"string\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string3\",\r\n    \"email\": \"user3@example.com\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"id\": \"{{id}}\",\r\n  \"text\": \"{{text}}\",\r\n  \"priority\": {{priority}},\r\n  \"deadline\": \"{{deadline}}\",\r\n  \"tags\": [\r\n    \"{{tags}}\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"{{name}}\",\r\n    \"email\": \"{{email}}\"\r\n  }\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/ToDos",
@@ -214,28 +232,23 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"const moment = require(\"moment\");\r",
-							"var startDate = moment();\r",
-							"var finishDate = moment(startDate).add(3,'hours');\r",
-							"\r",
 							"var jsonData = pm.response.json();\r",
 							"\r",
-							"//var envNewDoId = jsonData.id;\r",
 							"var deadline = jsonData.deadline;\r",
-							"var newDeadline = moment(deadline).add(3,'hours');\r",
+							"const moment = require(\"moment\");\r",
+							"nowDate = moment();\r",
 							"\r",
-							"//var newPriority = {{$randomInt}};\r",
+							"if (deadline == null) {\r",
+							"    deadline = moment(nowDate).add(3, 'day');\r",
+							"    console.log( 'deadline = nowDate + 3 day!', deadline);\r",
+							"} \r",
+							"else { deadline = moment(deadline).add(3, 'day');\r",
+							"console.log(\"deadline =\", deadline) \r",
+							"}\r",
 							"\r",
-							"var newText = pm.environment.replaceIn('{{$randomProduct}}');\r",
-							"\r",
-							"//console.log('envNewDoId =', envNewDoId)\r",
-							"console.log('startDate =', startDate)\r",
-							"console.log('finishDate =', finishDate)\r",
-							"console.log('deadline =', jsonData.deadline)\r",
-							"console.log('newDeadline =', newDeadline)\r",
-							"\r",
-							"//console.log('newPriority =', newPriority)\r",
-							"console.log('newText =', newText)\r",
+							"var tags = jsonData.tags;\r",
+							"//tags.push({{$randomAbbreviation}});\r",
+							"console.log(\"tags =\", tags)\r",
 							"\r",
 							""
 						],
@@ -246,20 +259,17 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"/*\r",
-							"var text = \"text6643\";\r",
-							"pm.environment.set(\"text\", text);\r",
-							"var priority = \"4\";\r",
-							"pm.environment.set(\"priority\", priority);\r",
-							"*/\r",
 							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -269,10 +279,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"3fa85f64-5717-4142-b3fc-2c963f66afa9\",\r\n  \"text\": \"text124\",\r\n  \"priority\": 2,\r\n  \"deadline\": \"2021-03-18T09:15:08.751Z\",\r\n  \"tags\": [\r\n    \"string\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"string3\",\r\n    \"email\": \"user3@example.com\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"id\": \"9d7db3c3-0123-41e2-8795-af5365f7581d\",\r\n  \"text\": \"uniq{{$guid}}\",\r\n  \"priority\": 6,\r\n  \"deadline\": \"{{deadline}}\",\r\n  \"tags\": [\r\n    \"{{$randomAbbreviation}}\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n  }\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/ToDos",
+					"raw": "http://localhost:5000/api/ToDos/{{id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -280,7 +290,8 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"ToDos"
+						"ToDos",
+						"{{id}}"
 					],
 					"query": [
 						{
