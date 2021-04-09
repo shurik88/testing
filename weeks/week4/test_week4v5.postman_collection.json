@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "allDos",
+			"name": "GetTodos",
 			"event": [
 				{
 					"listen": "test",
@@ -27,7 +27,7 @@
 							"\r",
 							"console.log(jsonData.length)\r",
 							"for( var i=0; i<jsonData.length; i++) {\r",
-							"if  (jsonData[i].deadline<=finishDate) {\r",
+							"if  (startDate<=jsonData[i].deadline && jsonData[i].deadline<=finishDate) {\r",
 							"    console.log(jsonData[i].deadline);\r",
 							"    console.log(\"Success!\");\r",
 							"}\r",
@@ -68,7 +68,19 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
 					"raw": "http://localhost:5000/api/ToDos",
 					"protocol": "http",
@@ -97,10 +109,12 @@
 							"count = jsonData.length;\r",
 							"\r",
 							"if (pm.response.status == \"OK\") {\r",
-							"  console.log( 'Success!', count);\r",
-							"} else console.log( 'False!');\r",
-							"\r",
-							"//console.log(pm.response.json())"
+							"  console.log( 'Success!', count); \r",
+							"} else {\r",
+							"    console.log( 'False!');\r",
+							"    console.log(pm.response.json()); \r",
+							"} \r",
+							"    "
 						],
 						"type": "text/javascript"
 					}
@@ -108,9 +122,20 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "http://localhost:5000/api/WeatherForecast?count=15",
+					"raw": "http://localhost:5000/api/WeatherForecast?count=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -123,7 +148,7 @@
 					"query": [
 						{
 							"key": "count",
-							"value": "15"
+							"value": "2"
 						}
 					]
 				}
@@ -238,7 +263,7 @@
 							"const moment = require(\"moment\");\r",
 							"nowDate = moment();\r",
 							"\r",
-							"if (deadline == null) {\r",
+							"if (deadline == null || deadline == \"\") {\r",
 							"    deadline = moment(nowDate).add(3, 'day');\r",
 							"    console.log( 'deadline = nowDate + 3 day!', deadline);\r",
 							"} \r",
@@ -246,8 +271,16 @@
 							"console.log(\"deadline =\", deadline) \r",
 							"}\r",
 							"\r",
+							"\r",
+							"console.log(\"priority =\", jsonData.priority);\r",
+							"\r",
 							"var tags = jsonData.tags;\r",
-							"//tags.push({{$randomAbbreviation}});\r",
+							"\r",
+							"var tag = pm.environment.get(\"tag\");\r",
+							"\r",
+							"tags.push(tag);\r",
+							"\r",
+							"console.log(\"tag =\", tag)\r",
 							"console.log(\"tags =\", tags)\r",
 							"\r",
 							""
@@ -259,7 +292,8 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							""
+							"pm.environment.set(\"tag\", \"{{$randomAbbreviation}}\");\r",
+							"var priority = pm.environment.set(\"priority\", _.random(1, 9));"
 						],
 						"type": "text/javascript"
 					}
@@ -279,7 +313,78 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"9d7db3c3-0123-41e2-8795-af5365f7581d\",\r\n  \"text\": \"uniq{{$guid}}\",\r\n  \"priority\": 6,\r\n  \"deadline\": \"{{deadline}}\",\r\n  \"tags\": [\r\n    \"{{$randomAbbreviation}}\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n  }\r\n}"
+					"raw": "{\r\n  \"id\": \"9d7db3c3-0123-41e2-8795-af5365f7581d\",\r\n  \"text\": \"uniq{{$guid}}\",\r\n  \"priority\": {{priority}},\r\n  \"deadline\": \"{{deadline}}\",\r\n  \"tags\": [\r\n    \"{{$randomAbbreviation}}\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/ToDos/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"ToDos",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "15",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetToDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var text;\r",
+							"pm.environment.get(\"text\");\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.text).to.eql(text);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/ToDos/{{id}}",
