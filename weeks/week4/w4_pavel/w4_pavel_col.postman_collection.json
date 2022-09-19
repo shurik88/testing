@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "cb698ccb-f978-4de5-a6da-03be6ba3b45d",
+		"name": "w4_pavel_col",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13761302"
+	},
+	"item": [
+		{
+			"name": "GetWeather",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.code);\r",
+							"if (pm.response.code == 200) {\r",
+							"   var jsonData = pm.response.json();\r",
+							"   console.log(\"Success \" + jsonData.length);\r",
+							"   } else{\r",
+							"    console.log(pm.response.json());\r",
+							"};"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mainURL}}/api/WeatherForecast?count={{$randomInt}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"WeatherForecast"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "{{$randomInt}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTodos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const moment = require(\"moment\");\r",
+							"var nowDate = moment().local();\r",
+							"var jsonData = pm.response.json();\r",
+							"var nowDatePlus7 = moment(nowDate).add(7,'days');\r",
+							"var nowDateMinus7 = moment(nowDate).add(-7,'days');\r",
+							"for (var i=0; i<jsonData.length; i++){\r",
+							"    if(jsonData[i].deadline){\r",
+							"    var inputDate=moment(jsonData[i].deadline);\r",
+							"    if( inputDate<=nowDatePlus7 && inputDate>=nowDateMinus7)\r",
+							"    {\r",
+							"        pm.environment.set(\"testId\",jsonData[i].id);\r",
+							"        pm.environment.set(\"testPriority\",jsonData[i].priority);\r",
+							"        pm.environment.set(\"testText\",jsonData[i].text);\r",
+							"        pm.environment.set(\"testDeadline\",inputDate.toISOString());\r",
+							"        postman.setNextRequest(\"EditToDo\");\r",
+							"        break;\r",
+							"    }}\r",
+							"};\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddToDo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var id=\"d75c28a0-a21f-411b-8ec0-6a25ba71dd33\";\r",
+							"var text=\"text from var \";\r",
+							"var priority=10;\r",
+							"var deadline=\"2022-09-20\";\r",
+							"pm.environment.set(\"testId\",id);\r",
+							"pm.environment.set(\"testText\",text);\r",
+							"pm.environment.set(\"testPriority\",priority);\r",
+							"pm.environment.set(\"testDeadline\",deadline);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"var id=jsonData.id;\r",
+							"pm.environment.set(\"testId\",id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"{{testText}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainURL}}/api/todos",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditToDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"testText\",jsonData.text);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require(\"moment\");\r",
+							"var deadline;\r",
+							"if(pm.environment.get(\"testDeadline\")) {deadline = moment(pm.environment.get(\"testDeadline\")).add(3,'days');}\r",
+							"else {deadline=moment().local().add(3,'days');}\r",
+							"pm.environment.set(\"testDeadline\", deadline.toISOString());\r",
+							"pm.environment.set(\"testPriority\",(Math.floor(Math.random() * 10)+1));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{testId}}\",\r\n  \"text\": \"text {{$guid}}\",\r\n  \"priority\": {{testPriority}},\r\n  \"deadline\": \"{{testDeadline}}\",\r\n  \"tags\": [\r\n    \"{{$randomAbbreviation}}\"\r\n  ],\r\n  \"assignedTo\": {\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{mainURL}}/api/todos/{{testId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"todos",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetToDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const moment = require(\"moment\");\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Проверка ИД\", function () {pm.expect(jsonData.id).to.eql(pm.environment.get(\"testId\"));});\r",
+							"pm.test(\"Проверка текста\", function () {pm.expect(jsonData.text).to.eql(pm.environment.get(\"testText\"));});\r",
+							"pm.test(\"Проверка приоритета\", function () {pm.expect(jsonData.priority).to.eql(pm.environment.get(\"testPriority\"));});\r",
+							"var utcDeadline=moment(jsonData.deadline).utc().toISOString();\r",
+							"pm.test(\"Проверка дедлайна\", function () {pm.expect(utcDeadline.substr(0,19)).to.eql(pm.environment.get(\"testDeadline\").substr(0,19));});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos/{{testId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteToDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Элемент успешно удален Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos/{{testId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDeletedToDo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Дело отсутствует Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/xml",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{mainURL}}/api/ToDos/{{testId}}",
+					"host": [
+						"{{mainURL}}"
+					],
+					"path": [
+						"api",
+						"ToDos",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
